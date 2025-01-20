@@ -6,7 +6,8 @@
 
     public class ApplicationDbContext : IdentityDbContext
     {
-        public DbSet<Entity> Entities { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
+        public DbSet<Url> Urls { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
