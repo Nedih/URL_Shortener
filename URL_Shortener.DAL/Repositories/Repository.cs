@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using URL_Shortener.DAL.Intefaces;
+using URL_Shortener.DAL.Interfaces;
 
 namespace URL_Shortener.DAL.Repositories
 {
@@ -64,11 +64,6 @@ namespace URL_Shortener.DAL.Repositories
             IQueryable<TEntity> query = _dbSet.AsNoTracking();
             return includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-        }
-
-        public IQueryable<TEntity> Sort(IQueryable<TEntity> items, string props)
-        {
-            throw new NotImplementedException();
         }
     }
 }

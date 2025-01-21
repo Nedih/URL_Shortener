@@ -1,6 +1,9 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using URL_Shortener.Api.Extensions;
+using URL_Shortener.BLL.Mapper;
 using URL_Shortener.DAL;
 using URL_Shortener.DAL.Entities;
 
@@ -22,6 +25,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddApplication();
+
+var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
+var mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

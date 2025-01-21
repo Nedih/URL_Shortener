@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace URL_Shortener.DAL.Intefaces
+namespace URL_Shortener.DAL.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
@@ -18,7 +18,6 @@ namespace URL_Shortener.DAL.Intefaces
         TEntity FirstOrDefault(Func<TEntity, bool> predicate);
         int Count(Func<TEntity, bool> predicate);
         IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
-        IQueryable<TEntity> Sort(IQueryable<TEntity> items, string props);
         Task SaveAsync();
     }
 }
