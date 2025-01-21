@@ -164,8 +164,7 @@ namespace URL_Shortener.DAL.Migrations
                 name: "Urls",
                 columns: table => new
                 {
-                    UrlId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UrlId = table.Column<long>(type: "bigint", nullable: false),
                     UrlText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShortenUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UrlCreationDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -197,12 +196,12 @@ namespace URL_Shortener.DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "12063cdc-e45b-4f66-bd3f-119a7a4a8c5c", 0, "d30fa888-b59c-4c07-9d40-a87296428505", "UserAccount", "admin1@admin.com", false, false, null, "Admin3", "ADMIN1@ADMIN.COM", "ADMIN1@ADMIN.COM", "AQAAAAIAAYagAAAAENT9FNckgudXJFOnbCb5kcmgKzupS4qRvVzKrqGiuFYRRFN66Y5LX7wOMW8L+0oOHA==", null, false, "e405c43b-4c6d-432e-931b-a8c9aba95133", false, "admin1@admin.com" },
-                    { "17643fd0-ade1-4c40-ba60-07758bcead9e", 0, "8baf08d2-fc98-43be-8a92-e13b7c9c300f", "UserAccount", "admin3@admin.com", false, false, null, "Admin3", "ADMIN3@ADMIN.COM", "ADMIN3@ADMIN.COM", "AQAAAAIAAYagAAAAEEVN5b4myDK37yauuHnuA0sndwPiwPHxDnaDwT3XivZTaomgJI+aE/+3aACYyOXayA==", null, false, "1b5ebef1-689b-49d0-881e-8278c64b7398", false, "admin3@admin.com" },
-                    { "237aa5f1-a53c-4828-ba17-4820e987bba2", 0, "8d3f99a6-65f6-4ea9-830a-895a380ba468", "UserAccount", "user3@user.com", false, false, null, "User1", "USER3@USER.COM", "USER3@USER.COM", "AQAAAAIAAYagAAAAEMAKgF0b12DMsWhMAg/TDCdFCz+TsmvuiXbXaYc9i/GFH/s9Ut1bmrzZ6cnUY0gQvA==", null, false, "bc51601d-1b79-4319-bbe9-cb8fdeae8fb7", false, "user3@user.com" },
-                    { "23bf6bff-f538-4d72-b79a-6efbf0dc9965", 0, "3f3027c0-a6ff-40f1-83a9-ded5533e5d59", "UserAccount", "user1@user.com", false, false, null, "User1", "USER1@USER.COM", "USER1@USER.COM", "AQAAAAIAAYagAAAAEAQcZd8ALkxLlNdz1cwFpYl5/xQBZo9cLPxSuXPUpPk1P/5NFnQV7q3pujjlXFykyQ==", null, false, "49b998be-94ea-452c-bf1e-3d42df643758", false, "user1@user.com" },
-                    { "26bf362a-f68a-4f5c-8021-2e1c5557a679", 0, "5568cc69-9041-41e6-89c4-53ef862e5dab", "UserAccount", "admin2@admin.com", false, false, null, "Admin3", "ADMIN2@ADMIN.COM", "ADMIN2@ADMIN.COM", "AQAAAAIAAYagAAAAEIZQvfnd4AKhUWOr/k67RsRq3pW0l1ujaX0WyzCR7Tj5rqJoLrLKtUcE1y7TC3XhWw==", null, false, "731aa9b4-2b53-436c-a165-a688448dab07", false, "admin2@admin.com" },
-                    { "5a69fcba-2888-437b-9bd9-777e94f13d94", 0, "79ffcf97-3472-4cfa-91f2-1837a90dd83f", "UserAccount", "user2@user.com", false, false, null, "User1", "USER2@USER.COM", "USER2@USER.COM", "AQAAAAIAAYagAAAAEN3xavumcyiSPoA45UihuZDzistz2Oo0KSn4zAppNBe1Dy5bCkN2mrpiGYUnjd/YSQ==", null, false, "1b34b3ba-246a-48a7-a9c5-4f9f9354b9d3", false, "user2@user.com" }
+                    { "09094db5-18cb-458b-a692-593a49be22ac", 0, "3807a0de-15b1-4a56-877d-882a7b38c48b", "UserAccount", "admin1@admin.com", false, false, null, "Admin1", "ADMIN1@ADMIN.COM", "ADMIN1@ADMIN.COM", "AQAAAAIAAYagAAAAEA5dfAzAOBCmSM0PnEkF6Ea4xMmr70tQ8z0khnUDdwpJHmhRkv9ZExJsPGa8Xc7RWA==", null, false, "3fa422ec-6981-448c-8d68-a432a5b2f46f", false, "admin1@admin.com" },
+                    { "393560c1-08a4-432e-aea3-efaf5015b512", 0, "de308398-36be-4af5-9a5d-5a62b074871f", "UserAccount", "user1@user.com", false, false, null, "User1", "USER1@USER.COM", "USER1@USER.COM", "AQAAAAIAAYagAAAAEAwYIJ/vqG1LOif3jAUh5pCO6n/kZewBJ1H23vTIpbn9UgXyByK+06FqK1Qxz6Zcdw==", null, false, "b1c632f4-1a77-4de9-bbe2-4a0a308bfb4b", false, "user1@user.com" },
+                    { "6a752942-d533-4e69-a832-a6fc7c975518", 0, "4af03a00-e5b9-45c8-b645-f92b825da0fd", "UserAccount", "user2@user.com", false, false, null, "User2", "USER2@USER.COM", "USER2@USER.COM", "AQAAAAIAAYagAAAAEPwAq9fKJ+PWrLVAeNzKxdi3Nf3gZIEzYmwuj39hfQY9G6jBpyTAFvZdqxo74nV+vw==", null, false, "bce45702-7c7a-4575-ac82-50a0ba526b3e", false, "user2@user.com" },
+                    { "81f99f48-c0bc-457d-ba51-f8a0c7114145", 0, "af7c7e7c-f0a9-4810-96c8-68b0e99ea886", "UserAccount", "user3@user.com", false, false, null, "User3", "USER3@USER.COM", "USER3@USER.COM", "AQAAAAIAAYagAAAAECxu+Dhn4/HrbRegeidb307cYLqtMPIpH0ADNSWi4RUQua8Y4Qex8Fze1useIgQzeQ==", null, false, "74b886dc-d199-4acb-945b-a5b703de01ad", false, "user3@user.com" },
+                    { "98c4f332-e1fe-42ae-8ec3-37d2ea1a407b", 0, "cde941c9-a1f6-4c32-8901-124ffa560b9d", "UserAccount", "admin2@admin.com", false, false, null, "Admin2", "ADMIN2@ADMIN.COM", "ADMIN2@ADMIN.COM", "AQAAAAIAAYagAAAAEILTweExGcKkHYRqhtOah/lGWUITcgKzGhXcqKh+ayKjyzJCunn1HECpvIYyo6Ex3Q==", null, false, "73ec830a-81d3-492a-8283-35256b8d0cab", false, "admin2@admin.com" },
+                    { "be1fff33-2672-4ae4-9a4e-72143b5a9afa", 0, "4abc7c19-f5b6-47f3-a9d8-cc96d1c3fc3e", "UserAccount", "admin3@admin.com", false, false, null, "Admin3", "ADMIN3@ADMIN.COM", "ADMIN3@ADMIN.COM", "AQAAAAIAAYagAAAAENmQ63X07hx7tuJV4mMxFhMGN5qknmHGTFOUoAgcYYKFN9lPkgx0KNppsnbDtT6TzA==", null, false, "6b047098-16a6-48b8-8bff-34160ebe6d37", false, "admin3@admin.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -210,12 +209,12 @@ namespace URL_Shortener.DAL.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "12063cdc-e45b-4f66-bd3f-119a7a4a8c5c" },
-                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "17643fd0-ade1-4c40-ba60-07758bcead9e" },
-                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "237aa5f1-a53c-4828-ba17-4820e987bba2" },
-                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "23bf6bff-f538-4d72-b79a-6efbf0dc9965" },
-                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "26bf362a-f68a-4f5c-8021-2e1c5557a679" },
-                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "5a69fcba-2888-437b-9bd9-777e94f13d94" }
+                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "09094db5-18cb-458b-a692-593a49be22ac" },
+                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "393560c1-08a4-432e-aea3-efaf5015b512" },
+                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "6a752942-d533-4e69-a832-a6fc7c975518" },
+                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "81f99f48-c0bc-457d-ba51-f8a0c7114145" },
+                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "98c4f332-e1fe-42ae-8ec3-37d2ea1a407b" },
+                    { "1c1ebabd-6745-4fc2-808d-48df8107736c", "be1fff33-2672-4ae4-9a4e-72143b5a9afa" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -18,7 +18,15 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);         
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Url>()
+                .HasKey(u => u.UrlId);
+
+            modelBuilder.Entity<Url>()
+                .Property(u => u.UrlId)
+                .ValueGeneratedNever();
+
             var users = SeedUsers(modelBuilder, 3);
             var roles = SeedRoles(modelBuilder);
             SeedUserRoles(modelBuilder, users, roles);
@@ -34,7 +42,7 @@
                 seedUsers.Add(new UserAccount
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = "Admin3",
+                    Name = $"Admin{i}",
                     UserName = admin,
                     NormalizedUserName = admin.ToUpper(),
                     Email = admin,
@@ -45,7 +53,7 @@
                 seedUsers.Add(new UserAccount
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = "User1",
+                    Name = $"User{i}",
                     UserName = user,
                     NormalizedUserName = user.ToUpper(),
                     Email = user,

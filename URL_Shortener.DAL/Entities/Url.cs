@@ -1,8 +1,12 @@
-﻿namespace URL_Shortener.DAL.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace URL_Shortener.DAL.Entities
 {
     public class Url
     {
-        public long UrlId { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public long UrlId { get; set; } = BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0);
+
         public string UrlText { get; set; }
         public string ShortenUrl { get; set; }
         public string UrlCreationDate { get; set; }

@@ -34,15 +34,21 @@ namespace URL_Shortener.BLL.Services
             try
             {
                 var author = await _userManager.FindByIdAsync(urlModel.UserId);
+
                 var url = _mapper.Map<Url>(urlModel);
+
                 var shortURL = Encode(url.UrlId);
                 url.ShortenUrl = Decode(shortURL) == url.UrlId? shortURL: throw new Exception("Shorten URL was corrupted");
-                url.UrlCreationDate = DateTime.Now.ToString("dd-mm-yyyy H:mm:ss:FFF");
+
+                url.UrlCreationDate = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss:FFF");
+
+                url.UserAccount = author;
+
                 _repository.Add(url);
             }
             catch (Exception ex)
             {
-                return Result.Fail(ex.Message);
+                return Result.Fail(ex.InnerException.Message);
             }
             return Result.Ok();
         }
@@ -84,7 +90,7 @@ namespace URL_Shortener.BLL.Services
             }
             catch (Exception ex)
             {
-                return Result.Fail(new Error(ex.Message));
+                return Result.Fail(new Error(ex.InnerException.Message));
             }
             return Result.Ok();
         }
@@ -97,7 +103,7 @@ namespace URL_Shortener.BLL.Services
             }
             catch (Exception ex)
             {
-                return Result.Fail(new Error(ex.Message));
+                return Result.Fail(new Error(ex.InnerException.Message));
             }
             return Result.Ok();
         }

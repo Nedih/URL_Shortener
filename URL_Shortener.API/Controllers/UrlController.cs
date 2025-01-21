@@ -10,6 +10,7 @@ using FluentResults;
 
 namespace URL_Shortener.API.Controllers
 {
+    [Route("api/url")]
     public class UrlController : Controller
     {
         private readonly IUrlService _service;
@@ -25,14 +26,14 @@ namespace URL_Shortener.API.Controllers
         {
             return _service.GetUrls();
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<Result> CreateUrl([FromBody] UrlDTO url)
         {
             return await _service.CreateAsync(url);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         public Result DeleteAsync(long id)
         {
