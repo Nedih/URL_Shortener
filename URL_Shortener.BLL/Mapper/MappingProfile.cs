@@ -9,7 +9,7 @@ namespace URL_Shortener.BLL.Mapper
         public MappingProfile()
         {           
             CreateMap<UserAccount, UserDTO>().ReverseMap().ForMember(dest => dest.UserName, opt => opt.MapFrom(x => x.Email));
-            
+            CreateMap<UrlDTO, Url>().ReverseMap().ForMember(dest => dest.UserId, opt => opt.MapFrom(x => x.UserAccountId));
         }
     }
 }

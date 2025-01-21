@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Hosting;
-using static System.Collections.Specialized.BitVector32;
 
 namespace URL_Shortener.DAL.Entities
 {
@@ -19,6 +12,6 @@ namespace URL_Shortener.DAL.Entities
         [Required]
         public string DateOfBirth { get; set; }
 
-
+        public List<Url> Urls { get; set; } 
     }
 }

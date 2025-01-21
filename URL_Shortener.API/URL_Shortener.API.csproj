@@ -26,8 +26,4 @@
     <ProjectReference Include="..\URL_Shortener.DAL\URL_Shortener.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
