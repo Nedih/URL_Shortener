@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using URL_Shortener.BLL.Interfaces;
 using URL_Shortener.BLL.Models;
 using URL_Shortener.DAL.Entities;
-using URL_Shortener.DAL.Intefaces;
+using URL_Shortener.DAL.Interfaces;
 
 namespace URL_Shortener.BLL.Services
 {

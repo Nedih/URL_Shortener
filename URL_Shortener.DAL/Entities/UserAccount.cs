@@ -7,10 +7,6 @@ namespace URL_Shortener.DAL.Entities
     {
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string Login { get; set; }
-        [Required]
-        public string DateOfBirth { get; set; }
 
         public List<Url> Urls { get; set; } 
     }

@@ -4,7 +4,7 @@ using URL_Shortener.BLL.Interfaces;
 using URL_Shortener.BLL.Models;
 using URL_Shortener.BLL.Models.Identity;
 using URL_Shortener.DAL.Entities;
-using URL_Shortener.DAL.Intefaces;
+using URL_Shortener.DAL.Interfaces;
 
 namespace URL_Shortener.BLL.Services
 {
@@ -48,7 +48,7 @@ namespace URL_Shortener.BLL.Services
 
         public UserDTO GetUserByLogin(string login)
         {
-            var user = _repo.FirstOrDefault(x => x.Login == login);
+            var user = _repo.FirstOrDefault(x => x.UserName == login);
             if (user != null)
             {
                 return _mapper.Map<UserDTO>(user);
@@ -73,7 +73,6 @@ namespace URL_Shortener.BLL.Services
             if (user == null)
                 return IdentityResult.Failed(new IdentityError { Description = "There is no such user.", Code = "WrongID" });
 
-            /*user = */
             _mapper.Map(userDto, user);
 
             IdentityResult result = await userManager.UpdateAsync(user);
@@ -127,22 +126,6 @@ namespace URL_Shortener.BLL.Services
             {
                 return IdentityResult.Failed(new IdentityError { Description = "This email have already been registered.", Code = "RegisteredEmail" });
             }
-        }
-
-        public async Task<IdentityResult> LockUser(string id)
-        {
-            var user = await userManager.FindByIdAsync(id);
-            if (user == null)
-                return IdentityResult.Failed(new IdentityError { Description = "There is no user with such ID.", Code = "WrongID" });
-            return await userManager.SetLockoutEndDateAsync(user, DateTime.Now.AddYears(1));
-        }
-
-        public async Task<IdentityResult> UnLockUser(string id)
-        {
-            var user = await userManager.FindByIdAsync(id);
-            if (user == null)
-                return IdentityResult.Failed(new IdentityError { Description = "There is no user with such ID.", Code = "WrongID" });
-            return await userManager.SetLockoutEndDateAsync(user, DateTime.Now);
         }
     }
 }

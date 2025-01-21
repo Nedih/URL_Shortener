@@ -15,7 +15,5 @@ namespace URL_Shortener.BLL.Interfaces
         Task<IdentityResult> CreateUser(RegisterViewModel userDto);
         Task<IdentityResult> UpdatePassword(string id, ChangePasswordViewModel model);
         Task<IdentityResult> UpdateEmail(string currentEmail, string newEmail);
-        Task<IdentityResult> LockUser(string id);
-        Task<IdentityResult> UnLockUser(string id);
     }
 }

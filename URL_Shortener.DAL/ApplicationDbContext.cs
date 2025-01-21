@@ -1,11 +1,8 @@
 ﻿namespace URL_Shortener.DAL
 {
-    using System.Reflection.Emit;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
     using URL_Shortener.DAL.Entities;
 
     public class ApplicationDbContext : IdentityDbContext
@@ -15,7 +12,7 @@
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
