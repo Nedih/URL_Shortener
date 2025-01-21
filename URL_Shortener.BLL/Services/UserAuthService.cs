@@ -35,8 +35,7 @@ namespace URL_Shortener.BLL.Services
             {
                 Email = model.Email,
                 UserName = model.Email,
-                Name = model.Name,
-                PhoneNumber = model.PhoneNumber
+                Name = model.Name
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Errors.Count() == 0)

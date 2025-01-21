@@ -14,9 +14,6 @@ namespace URL_Shortener.BLL.Models
             return new ProfileDTO
             {
                 Name = user.Name,
-                Login = user.Login,
-                Image = user.Image,
-                DateOfBirth = user.DateOfBirth,
                 PhoneNumber = user.PhoneNumber
             };
         }

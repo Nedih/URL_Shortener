@@ -12,7 +12,7 @@ using URL_Shortener.DAL;
 namespace URL_Shortener.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250121144921_InitialMigration")]
+    [Migration("20250121160320_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -231,33 +231,33 @@ namespace URL_Shortener.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "1ec6d434-ef87-4d40-a16b-15195cff094f",
+                            UserId = "12063cdc-e45b-4f66-bd3f-119a7a4a8c5c",
                             RoleId = "1c1ebabd-6745-4fc2-808d-48df8107736c"
                         },
                         new
                         {
-                            UserId = "0a6a73d6-3e34-4a43-90c3-5e78a3d984b2",
+                            UserId = "23bf6bff-f538-4d72-b79a-6efbf0dc9965",
                             RoleId = "1c1ebabd-6745-4fc2-808d-48df8107736c"
                         },
                         new
                         {
-                            UserId = "cae16653-8b16-4b2f-99d8-b62125b0ca65",
+                            UserId = "26bf362a-f68a-4f5c-8021-2e1c5557a679",
                             RoleId = "1c1ebabd-6745-4fc2-808d-48df8107736c"
                         },
                         new
                         {
-                            UserId = "2c7ea02a-93f3-4cd8-9bbd-6df65fd019cb",
-                            RoleId = "47e17bad-e591-4084-b31c-40c1e4859bd7"
+                            UserId = "5a69fcba-2888-437b-9bd9-777e94f13d94",
+                            RoleId = "1c1ebabd-6745-4fc2-808d-48df8107736c"
                         },
                         new
                         {
-                            UserId = "0ae67c27-0915-4f7a-8385-38850e6f8f3d",
-                            RoleId = "47e17bad-e591-4084-b31c-40c1e4859bd7"
+                            UserId = "17643fd0-ade1-4c40-ba60-07758bcead9e",
+                            RoleId = "1c1ebabd-6745-4fc2-808d-48df8107736c"
                         },
                         new
                         {
-                            UserId = "40b29fac-8c21-4212-bd4c-ef469b5209e1",
-                            RoleId = "47e17bad-e591-4084-b31c-40c1e4859bd7"
+                            UserId = "237aa5f1-a53c-4828-ba17-4820e987bba2",
+                            RoleId = "1c1ebabd-6745-4fc2-808d-48df8107736c"
                         });
                 });
 
@@ -327,93 +327,105 @@ namespace URL_Shortener.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1ec6d434-ef87-4d40-a16b-15195cff094f",
+                            Id = "12063cdc-e45b-4f66-bd3f-119a7a4a8c5c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e387cc8e-e35a-41fe-b8a7-6fb116f3b3e1",
+                            ConcurrencyStamp = "d30fa888-b59c-4c07-9d40-a87296428505",
+                            Email = "admin1@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN1@ADMIN.COM",
+                            NormalizedUserName = "ADMIN1@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENT9FNckgudXJFOnbCb5kcmgKzupS4qRvVzKrqGiuFYRRFN66Y5LX7wOMW8L+0oOHA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e405c43b-4c6d-432e-931b-a8c9aba95133",
+                            TwoFactorEnabled = false,
+                            UserName = "admin1@admin.com",
+                            Name = "Admin3"
+                        },
+                        new
+                        {
+                            Id = "23bf6bff-f538-4d72-b79a-6efbf0dc9965",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3f3027c0-a6ff-40f1-83a9-ded5533e5d59",
                             Email = "user1@user.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKIAVdRRQEvHdn9Jj1DxrN6EmwbFzNZ4oVzZjkCzrKAC0/BBoTw2fven3Ujk3r/AnQ==",
+                            NormalizedEmail = "USER1@USER.COM",
+                            NormalizedUserName = "USER1@USER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAQcZd8ALkxLlNdz1cwFpYl5/xQBZo9cLPxSuXPUpPk1P/5NFnQV7q3pujjlXFykyQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a859b115-b434-4113-8409-d5c82c292c3f",
+                            SecurityStamp = "49b998be-94ea-452c-bf1e-3d42df643758",
                             TwoFactorEnabled = false,
-                            UserName = "User1",
+                            UserName = "user1@user.com",
                             Name = "User1"
                         },
                         new
                         {
-                            Id = "0a6a73d6-3e34-4a43-90c3-5e78a3d984b2",
+                            Id = "26bf362a-f68a-4f5c-8021-2e1c5557a679",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "73e2a513-f136-4008-904c-f424d2e197ae",
+                            ConcurrencyStamp = "5568cc69-9041-41e6-89c4-53ef862e5dab",
+                            Email = "admin2@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN2@ADMIN.COM",
+                            NormalizedUserName = "ADMIN2@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIZQvfnd4AKhUWOr/k67RsRq3pW0l1ujaX0WyzCR7Tj5rqJoLrLKtUcE1y7TC3XhWw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "731aa9b4-2b53-436c-a165-a688448dab07",
+                            TwoFactorEnabled = false,
+                            UserName = "admin2@admin.com",
+                            Name = "Admin3"
+                        },
+                        new
+                        {
+                            Id = "5a69fcba-2888-437b-9bd9-777e94f13d94",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "79ffcf97-3472-4cfa-91f2-1837a90dd83f",
                             Email = "user2@user.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAENoKMtG3IAQ4/7Tx8tjlO09Xo/dnnTd7tO1qKsHlKQdixdIpT8/sII4/CjFVwv5xJA==",
+                            NormalizedEmail = "USER2@USER.COM",
+                            NormalizedUserName = "USER2@USER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN3xavumcyiSPoA45UihuZDzistz2Oo0KSn4zAppNBe1Dy5bCkN2mrpiGYUnjd/YSQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "88d9db33-45ab-4aa7-b795-88bae1e5e8f1",
+                            SecurityStamp = "1b34b3ba-246a-48a7-a9c5-4f9f9354b9d3",
                             TwoFactorEnabled = false,
-                            UserName = "User2",
-                            Name = "User2"
+                            UserName = "user2@user.com",
+                            Name = "User1"
                         },
                         new
                         {
-                            Id = "cae16653-8b16-4b2f-99d8-b62125b0ca65",
+                            Id = "17643fd0-ade1-4c40-ba60-07758bcead9e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "89242b54-611f-4e84-9cdc-f01eaf965003",
+                            ConcurrencyStamp = "8baf08d2-fc98-43be-8a92-e13b7c9c300f",
+                            Email = "admin3@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN3@ADMIN.COM",
+                            NormalizedUserName = "ADMIN3@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEVN5b4myDK37yauuHnuA0sndwPiwPHxDnaDwT3XivZTaomgJI+aE/+3aACYyOXayA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1b5ebef1-689b-49d0-881e-8278c64b7398",
+                            TwoFactorEnabled = false,
+                            UserName = "admin3@admin.com",
+                            Name = "Admin3"
+                        },
+                        new
+                        {
+                            Id = "237aa5f1-a53c-4828-ba17-4820e987bba2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8d3f99a6-65f6-4ea9-830a-895a380ba468",
                             Email = "user3@user.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAECFJ1oIARwHPwz6vpe1LcmzweW+UcPS03NEIcq2ckCYTuduGw1Avr0atd+ySkDv17w==",
+                            NormalizedEmail = "USER3@USER.COM",
+                            NormalizedUserName = "USER3@USER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMAKgF0b12DMsWhMAg/TDCdFCz+TsmvuiXbXaYc9i/GFH/s9Ut1bmrzZ6cnUY0gQvA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "02abd987-cbbc-4d59-8647-a5c06fd5e272",
+                            SecurityStamp = "bc51601d-1b79-4319-bbe9-cb8fdeae8fb7",
                             TwoFactorEnabled = false,
-                            UserName = "User3",
-                            Name = "User3"
-                        },
-                        new
-                        {
-                            Id = "2c7ea02a-93f3-4cd8-9bbd-6df65fd019cb",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "697a3a89-ecca-43d8-a1df-34097f2c9342",
-                            Email = "admin1@user.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEEUZzw/kqkQq5atRoCS9MdypjcyXuf73bsNrrZxiB8M0w/84Mk0ieGHRC9X+togebg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "4c84b0e0-781c-4818-95b6-d4d23fdc11cb",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin1",
-                            Name = "Admin1"
-                        },
-                        new
-                        {
-                            Id = "0ae67c27-0915-4f7a-8385-38850e6f8f3d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c5cd98f9-f581-42fb-bc05-8c024ba31486",
-                            Email = "admin2@user.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKLL9oZvNRbWkrcpUDTIq4m/FIjFs98JaahRITT0utJxpwEPFgV17axRRlohDaMnQw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ac384698-28a5-4163-b471-7e7c8c894c69",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin2",
-                            Name = "Admin2"
-                        },
-                        new
-                        {
-                            Id = "40b29fac-8c21-4212-bd4c-ef469b5209e1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5604de06-9340-473a-92d8-508d7c2d3668",
-                            Email = "admin3@user.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAELzx2Igstm5XVh+u4mrZKCXPOZL/j6dwxrqDuXdAbswM/nw27cgll4IDhZIsBKG1+g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "acb40238-8251-425b-bee4-a767102dead4",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin3",
-                            Name = "Admin3"
+                            UserName = "user3@user.com",
+                            Name = "User1"
                         });
                 });
 

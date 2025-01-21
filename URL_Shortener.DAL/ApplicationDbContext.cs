@@ -1,5 +1,6 @@
 ﻿namespace URL_Shortener.DAL
 {
+    using System;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
@@ -18,58 +19,44 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);         
-            var users = SeedUsers(modelBuilder);
+            var users = SeedUsers(modelBuilder, 3);
             var roles = SeedRoles(modelBuilder);
             SeedUserRoles(modelBuilder, users, roles);
         }
 
-        private List<UserAccount> SeedUsers(ModelBuilder builder)
+        private List<UserAccount> SeedUsers(ModelBuilder builder, int count)
         {
-            List<UserAccount> seedUsers = new List<UserAccount>
+            List<UserAccount> seedUsers = new List<UserAccount>();
+            
+            for(int i = 1; i <= count; i++) 
             {
-                new UserAccount{
-                    //Id = "b74ddd14-6wp0-4gg0-95c2-db12554843e1",
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "User1",
-                    UserName = "User1",
-                    Email = "user1@user.com",
-                },
-                new UserAccount{
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "User2",
-                    UserName = "User2",
-                    Email = "user2@user.com"
-                },
-                new UserAccount{
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "User3",
-                    UserName = "User3",
-                    Email = "user3@user.com"
-                },
-                new UserAccount{
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Admin1",
-                    UserName = "Admin1",
-                    Email = "admin1@user.com"
-                },
-                new UserAccount{
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Admin2",
-                    UserName = "Admin2",
-                    Email = "admin2@user.com"
-                },
-                new UserAccount{
+                string admin = $"admin{i}@admin.com";
+                seedUsers.Add(new UserAccount
+                {
                     Id = Guid.NewGuid().ToString(),
                     Name = "Admin3",
-                    UserName = "Admin3",
-                    Email = "admin3@user.com"
-                }
-            };
+                    UserName = admin,
+                    NormalizedUserName = admin.ToUpper(),
+                    Email = admin,
+                    NormalizedEmail = admin.ToUpper()
+                });
+
+                string user = $"user{i}@user.com";
+                seedUsers.Add(new UserAccount
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = "User1",
+                    UserName = user,
+                    NormalizedUserName = user.ToUpper(),
+                    Email = user,
+                    NormalizedEmail = user.ToUpper()
+                });
+            }
 
             var ph = new PasswordHasher<UserAccount>();
 
             foreach (var user in seedUsers)
-                user.PasswordHash = ph.HashPassword(user, "qwerty123");
+                user.PasswordHash = ph.HashPassword(user, "Qwerty_123");
 
             builder.Entity<UserAccount>().HasData(seedUsers);
             return seedUsers;
