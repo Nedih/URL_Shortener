@@ -1,0 +1,6 @@
+@URL_Shortener.Server_HostAddress = http://localhost:5142
+
+GET {{URL_Shortener.Server_HostAddress}}/api/url
+Accept: application/json
+
+###

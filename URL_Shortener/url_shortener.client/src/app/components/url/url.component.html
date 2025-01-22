@@ -1,0 +1,28 @@
+<div class="url-table">
+  <h2>Shortened URLs</h2>
+
+  <!-- Display "No data" message if the array is empty -->
+  <p *ngIf="urls.length === 0"><em>No URLs found. Please add some.</em></p>
+
+  <!-- Table for displaying the URLs -->
+  <table *ngIf="urls.length > 0">
+    <thead>
+      <tr>
+        <th>Original URL</th>
+        <th>Shortened URL</th>
+        <th>Creation Date</th>
+        <th>Description</th>
+        <th>User ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let url of urls">
+        <td>{{ url.urlText }}</td>
+        <td><a [href]="url.shortenUrl" target="_blank">{{ "https://localhost:7214/" + url.shortenUrl }}</a></td>
+        <td>{{ url.urlCreationDate }}</td>
+        <td>{{ url.urlDescription }}</td>
+        <td>{{ url.userId }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

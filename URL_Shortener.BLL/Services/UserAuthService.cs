@@ -29,6 +29,13 @@ namespace URL_Shortener.BLL.Services
             _configuration = configuration;
         }
 
+        public async Task<List<string>> GetUserClaimsAsync(LoginViewModel userModel)
+        {
+            var user = await _userManager.FindByEmailAsync(userModel.Email);
+            var roles = await _userManager.GetRolesAsync(user);
+            return roles.ToList();
+        }
+
         public async Task<IdentityResult> RegisterUserAsync(RegisterViewModel model)
         {
             UserAccount user = new UserAccount

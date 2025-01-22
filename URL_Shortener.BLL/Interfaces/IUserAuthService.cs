@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using URL_Shortener.BLL.Models.Identity;
+using URL_Shortener.DAL.Entities;
 
 namespace URL_Shortener.BLL.Interfaces
 {
@@ -7,5 +8,6 @@ namespace URL_Shortener.BLL.Interfaces
     {
         Task<IdentityResult> RegisterUserAsync(RegisterViewModel model);
         Task<IdentityResult> ValidateUserAsync(LoginViewModel model);
+        Task<List<string>> GetUserClaimsAsync(LoginViewModel user);
     }
 }
