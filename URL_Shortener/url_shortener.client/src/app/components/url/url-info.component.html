@@ -1,7 +1,7 @@
 <div class="url-details">
   <h2>URL Details</h2>
   <p><strong>Original URL:</strong> {{ selectedUrl?.urlText }}</p>
-  <p><strong>Shortened URL:</strong> <a [href]="selectedUrl?.shortenUrl" target="_blank">{{ selectedUrl?.shortenUrl }}</a></p>
+  <p><strong>Shortened URL:</strong> {{ "https://localhost:7214/" + selectedUrl?.shortenUrl }}</p>
   <p><strong>Creation Date:</strong> {{ selectedUrl?.urlCreationDate }}</p>
   <p><strong>Description:</strong> {{ selectedUrl?.urlDescription }}</p>
   <p><strong>Created By:</strong> {{ selectedUrl?.userEmail }}</p>

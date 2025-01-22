@@ -56,7 +56,7 @@ export class RegisterComponent{
       }
     });
     alert('Registration successful!');
-    this.router.navigate(['/login']); // Redirect to login after successful registration
+    this.router.navigate(['/login']); 
 
 
   }

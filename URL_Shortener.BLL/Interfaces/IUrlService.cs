@@ -9,5 +9,6 @@ namespace URL_Shortener.BLL.Interfaces
         public Result Update(UrlDTO url);
         public Result Delete(string url);
         public List<UrlDTO> GetUrls();
+        UrlDTO? GetUrl(string url);
     }
 }

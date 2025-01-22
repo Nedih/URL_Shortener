@@ -26,25 +26,25 @@ namespace URL_Shortener.Server.Controllers
         {
             return _service.GetUrls();
         }
-        [Authorize]
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         public async Task<Result> CreateUrl([FromBody] UrlDTO url)
         {
             return await _service.CreateAsync(url);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User, Admin")]
         [HttpDelete]
         public Result DeleteAsync(string url)
         {
             return _service.Delete(url).IsSuccess ? Result.Ok() : Result.Fail(_service.Delete(url).Errors);
         }
 
-        /*[Authorize]
-        [HttpGet("{id}")]
-        public async Task<UrlDTO?> GetPost(Guid id)
+        [Authorize(Roles = "User, Admin")]
+        [HttpGet("{shorten}")]
+        public UrlDTO? GetPost(string shorten)
         {
-            return await _service.GetUrl(id);
-        }    */
+            return _service.GetUrl(shorten);
+        }    
     }
 }

@@ -10,6 +10,12 @@ const PROXY_CONFIG = [
     ],
     target,
     secure: false
+  }, {
+    context: [
+      "/api",
+    ],
+    target,
+    secure: false
   }
 ]
 

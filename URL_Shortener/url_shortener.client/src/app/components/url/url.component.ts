@@ -71,11 +71,15 @@ export class UrlTableComponent implements OnInit {
     return res;
   }
 
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
   isUserOwner(email: string) {
     return this.authService.getEmail() === email;
   }
 
-  viewUrlDetails(url: Url): void {
+  viewUrlDetails(url: string): void {
     this.router.navigate(['/url-details', url]);
   }
 
