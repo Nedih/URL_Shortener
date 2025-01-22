@@ -5,6 +5,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import $ from 'jquery';
+//import { MatCardModule } from '@angular/material/card';
 
 interface Url {
   urlText: string;
@@ -28,16 +29,16 @@ export class UrlTableComponent implements OnInit {
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
-    /*this.isLoggedIn = this.authService.isLoggedIn();
-    this.isAdmin = this.authService.isAdmin();
-    this.userEmail = this.authService.getEmail();*/
-
-    this.fetchUrls();
-  }
+  ngOnInit() { this.fetchUrls();}
 
   fetchUrls(){
-    this.http.get<Url[]>(`${environment.apiBaseUrl}/api/url`).subscribe({
+    this.http.get<Url[]>(`${environment.apiBaseUrl}/api/url`, {
+      headers: {
+        "access-control-allow-origin": "*",
+        'Content-Type': ['application/json', 'multipart/form-data']
+      },
+      withCredentials: true
+    }).subscribe({
       next: (result) => {
         console.log('Fetched URLs:', result);
         this.urls = result;
@@ -51,10 +52,15 @@ export class UrlTableComponent implements OnInit {
     });
   }
 
-  deleteUrl(url: string): void {
-    this.http.delete(`${environment.apiBaseUrl}/api/url`).subscribe({
-      next: (result) => {
-        console.log('Delete URL:', result);
+  deleteUrl(shorten: string): void {
+    this.http.delete(`${environment.apiBaseUrl}/api/url?shorten=${shorten}`, {
+      headers: {
+        "access-control-allow-origin": "*",
+        'Content-Type': ['application/json', 'multipart/form-data']
+      },
+      withCredentials: true }).subscribe({
+      next: () => {
+        console.log('Delete URL');
       },
       error: (error) => {
         console.error('Error deleting URLs:', error);
@@ -63,6 +69,10 @@ export class UrlTableComponent implements OnInit {
         console.log('URL delete complete');
       }
     });
+  }
+
+  addUrl() {
+    this.router.navigate(['/url-add']);
   }
 
   isAdmin() {

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router, RouterLink, RouterLinkActive} from '@angular/router';
 import { NgIf } from '@angular/common';
+//import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  imports: [ NgIf, RouterLink, RouterLinkActive],
+  imports: [NgIf, RouterLink, RouterLinkActive],
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent{

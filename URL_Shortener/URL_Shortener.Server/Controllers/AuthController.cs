@@ -57,7 +57,7 @@ namespace URL_Shortener.Server.Controllers
             return Ok(new
             {
                 username = user.Email,
-                roles = roles 
+                roles = roles
             });
         }
     }

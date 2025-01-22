@@ -28,6 +28,7 @@ export class AuthService {
   logout(): void {
     this.loggedIn.next(false);
     localStorage.removeItem('roles');
+    localStorage.removeItem('email');
   }
 
   isLoggedIn(): boolean {

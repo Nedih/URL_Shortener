@@ -1,29 +1,33 @@
-<div class="url-table">
-  <h2>Shortened URLs</h2>
+<div class="url-table ">
+    <h2>Shortened URLs</h2>
+    <button *ngIf="isLoggedIn()" class="btn btn-block" (click)="addUrl()">
+      New
+    </button>
 
-  <p *ngIf="urls.length === 0"><em>No URLs found. Please add some.</em></p>
+    
+    <p *ngIf="urls.length === 0"><em>No URLs found. Please add some.</em></p>
 
-  <table *ngIf="urls.length > 0">
-    <thead>
-      <tr>
-        <th>Original URL</th>
-        <th>Shortened URL</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let url of urls">
-        <td>{{ url.urlText }}</td>
-        <td><a>{{ "https://localhost:7214/" + url.shortenUrl }}</a></td>
-        <td>
-          <button  *ngIf="isLoggedIn()" class="btn btn-info" (click)="viewUrlDetails(url.shortenUrl)">
-            Details
-          </button>
-          <button *ngIf="isAdmin() || isUserOwner(url.userEmail)" (click)="deleteUrl(url.urlText)">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <table *ngIf="urls.length > 0" >
+      <thead>
+        <tr>
+          <th>Original URL</th>
+          <th>Shortened URL</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let url of urls">
+          <td>{{ url.urlText }}</td>
+          <td><a>{{ "https://localhost:7214/" + url.shortenUrl }}</a></td>
+          <td>
+            <button *ngIf="isLoggedIn()" class="btn btn-info" (click)="viewUrlDetails(url.shortenUrl)">
+              Details
+            </button>
+            <button *ngIf="isAdmin() || isUserOwner(url.userEmail)" (click)="deleteUrl(url.shortenUrl)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 </div>

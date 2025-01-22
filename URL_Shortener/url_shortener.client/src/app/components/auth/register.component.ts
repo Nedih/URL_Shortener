@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
   selector: 'app-register',
   standalone: true, 
   templateUrl: './register.component.html',
-  imports: [ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent{

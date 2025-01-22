@@ -21,8 +21,12 @@ builder.Services.AddIdentity<UserAccount, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(option => option.LoginPath = "/Auth/login");
-builder.Services.AddAuthorization();
+                .AddCookie(option => option.LoginPath = "/auth/login");
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UserOrAdmin", policy =>
+        policy.RequireRole("User", "Admin"));  // Restrict access to User or Admin roles
+});
 
 builder.Services.AddRazorPages();
 
@@ -38,9 +42,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
-        builder.AllowAnyOrigin()
+        builder.WithOrigins("https://localhost:7498")
+               //.AllowAnyOrigin()
                .AllowAnyMethod()
-               .AllowAnyHeader());
+               .AllowAnyHeader()
+               .AllowCredentials());
+               //.SetIsOriginAllowed(origin => true));
 });
 
 var app = builder.Build();
@@ -65,12 +72,16 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseCors("AllowAll");
+
 app.MapControllers();
 
-app.UseCors("AllowAll");
+
 
 
 app.MapRazorPages();

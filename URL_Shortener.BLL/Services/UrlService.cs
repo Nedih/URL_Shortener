@@ -30,11 +30,14 @@ namespace URL_Shortener.BLL.Services
                 .Select((c, i) => new { Index = i, Char = c })
                 .ToDictionary(c => c.Char, c => c.Index);
         }
-        public async Task<Result> CreateAsync(UrlDTO urlModel)
+        public async Task<Result<string>> CreateAsync(UrlDTO urlModel)
         {
             try
             {
-                var author = await _userManager.FindByIdAsync(urlModel.UserId);
+                if (_repository.FirstOrDefault(x => x.UrlText == urlModel.UrlText) != null)
+                    return Result.Fail("This URL is already in our DataBase");
+                
+                var author = await _userManager.FindByEmailAsync(urlModel.UserEmail);
 
                 var url = _mapper.Map<Url>(urlModel);
 
@@ -46,12 +49,13 @@ namespace URL_Shortener.BLL.Services
                 url.UserAccount = author;
 
                 _repository.Add(url);
+                
+                return Result.Ok(shortURL);
             }
             catch (Exception ex)
             {
                 return Result.Fail(ex.InnerException.Message);
             }
-            return Result.Ok();
         }
 
         private string Encode(long num) 
@@ -84,9 +88,12 @@ namespace URL_Shortener.BLL.Services
 
         public Result Delete(string url)
         {
-            var entity = _repository.FirstOrDefault(x => x.UrlText == url);
             try
             {
+                var entity = _repository.FirstOrDefault(x => x.ShortenUrl == url);
+                if (entity == null)
+                    return Result.Fail(new Error("There is no such entity"));
+
                 _repository.Remove(entity);
             }
             catch (Exception ex)

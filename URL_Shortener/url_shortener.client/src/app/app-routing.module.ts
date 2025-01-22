@@ -15,6 +15,11 @@ export const routes: Routes = [
   },
   //{ path: 'about', component: AboutComponent },/url-details
   {
+    path: 'url-add',
+    loadComponent: () => import('./components/url/url-add.component').then(m => m.UrlCreateComponent),
+    title: 'Url Add'
+  },
+  {
     path: 'url-details/:shortenUrl',
     loadComponent: () => import('./components/url/url-info.component').then(m => m.UrlDetailsComponent),
     title: 'Url Details'

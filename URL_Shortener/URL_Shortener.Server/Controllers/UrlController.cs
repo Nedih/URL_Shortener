@@ -7,6 +7,7 @@ using URL_Shortener.BLL.Models.ViewModels;
 using URL_Shortener.BLL.Interfaces;
 using URL_Shortener.BLL.Models;
 using FluentResults;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace URL_Shortener.Server.Controllers
 {
@@ -26,23 +27,31 @@ namespace URL_Shortener.Server.Controllers
         {
             return _service.GetUrls();
         }
-        [Authorize(Roles = "User, Admin")]
-        [HttpPost]
-        public async Task<Result> CreateUrl([FromBody] UrlDTO url)
+        //[Authorize(Roles = "User, Admin")]
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateUrl([FromBody] UrlDTO url)
         {
-            return await _service.CreateAsync(url);
+            var result = await _service.CreateAsync(url);
+            if (result.IsSuccess)
+            {
+                return Ok(new{ shortenUrl = result.Value });
+            }
+
+            return BadRequest(string.Join(", ", result.Errors.Select(error => error.Message)));
         }
 
-        [Authorize(Roles = "User, Admin")]
+        //[Authorize] //(Roles = "User, Admin")
+        //[AllowAnonymous]
         [HttpDelete]
-        public Result DeleteAsync(string url)
+        public Result Delete(string shorten)
         {
-            return _service.Delete(url).IsSuccess ? Result.Ok() : Result.Fail(_service.Delete(url).Errors);
+            var res = _service.Delete(shorten);
+            return res.IsSuccess ? Result.Ok() : Result.Fail(res.Errors);
         }
 
         [Authorize(Roles = "User, Admin")]
         [HttpGet("{shorten}")]
-        public UrlDTO? GetPost(string shorten)
+        public UrlDTO GetPost([FromQuery] string shorten)
         {
             return _service.GetUrl(shorten);
         }    

@@ -5,11 +5,12 @@ import { environment } from '../../../environments/environment';
 
 
 export interface URL {
-  id: number;
-  originalUrl: string;
-  shortUrl: string;
-  createdBy: string;
-  createdDate: string;
+  shortenUrl: string;
+  urlCreationDate: string;
+  urlDescription: string;
+  urlText: string;
+  userEmail: string;
+  userId: string;
 }
 
 @Injectable({
@@ -20,22 +21,29 @@ export class UrlService {
 
   constructor(private http: HttpClient) { }
 
-  // Get all URLs
   getUrls(): Observable<URL[]> {
     return this.http.get<URL[]>(this.apiUrl);
   }
 
-  // Add a new URL
   addUrl(url: URL): Observable<URL> {
     return this.http.post<URL>(this.apiUrl, url);
   }
 
-  // Delete a URL by ID
   deleteUrl(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  // Get details about a URL by ID
+  createUrl(urlData: { urlText: string; urlDescription: string; userEmail: string }): Observable<any> {
+    const { urlText, urlDescription, userEmail } = urlData;
+    return this.http.post(`${environment.apiBaseUrl}/api/url/create`, { urlText, urlDescription, userEmail }, {
+      headers: {
+        'access-control-allow-origin': '*',
+        'Content-Type': ['application/json', 'multipart/form-data'], 
+      },
+      withCredentials: true, 
+    });
+  }
+
   getUrlById(id: number): Observable<URL> {
     return this.http.get<URL>(`${this.apiUrl}/${id}`);
   }
