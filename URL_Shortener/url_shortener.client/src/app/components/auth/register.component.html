@@ -1,0 +1,35 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Username</label>
+    <input id="username" formControlName="username" />
+    <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+      <small class="text-danger">Username is required</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" />
+    <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+      <small class="text-danger">Email is required</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" />
+    <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+      <small class="text-danger">Password is required</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="confirmPassword">Confirm Password</label>
+    <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+    <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+      <small class="text-danger">Confirm Password is required</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+</form>

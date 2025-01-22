@@ -1,0 +1,45 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email"
+             id="email"
+             class="form-control"
+             formControlName="email"
+             placeholder="Enter your email" />
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
+        <small *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
+        <small *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</small>
+      </div>
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password"
+             id="password"
+             class="form-control"
+             formControlName="password"
+             placeholder="Enter your password" />
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
+        <small *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</small>
+        <small *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 6 characters long.</small>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || loginForm.invalid">
+      {{ isSubmitting ? 'Logging in...' : 'Login' }}
+    </button>
+  </form>
+</div>
+
+

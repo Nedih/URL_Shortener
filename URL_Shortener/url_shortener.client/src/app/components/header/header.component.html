@@ -1,0 +1,15 @@
+<header>
+  <nav>
+    <ul>
+      <li><a routerLink="/urls">Url List</a></li>
+      <li><a routerLink="/about">About</a></li>
+
+      <li *ngIf="!isLoggedIn()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+      <li *ngIf="!isLoggedIn()"><a routerLink="/register" routerLinkActive="active">Register</a></li>
+
+      <li *ngIf="isLoggedIn()"><a (click)="onLogout()">Logout</a></li>
+
+    </ul>
+  </nav>
+</header>
+
