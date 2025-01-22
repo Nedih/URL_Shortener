@@ -15,5 +15,6 @@ namespace URL_Shortener.BLL.Models
         public string? UrlDescription { get; set; }
 
         public string UserId { get; set; }
+        public string UserEmail { get; set; }
     }
 }

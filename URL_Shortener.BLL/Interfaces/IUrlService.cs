@@ -7,7 +7,7 @@ namespace URL_Shortener.BLL.Interfaces
     {
         public Task<Result> CreateAsync(UrlDTO url);
         public Result Update(UrlDTO url);
-        public Result Delete(long id);
+        public Result Delete(string url);
         public List<UrlDTO> GetUrls();
     }
 }

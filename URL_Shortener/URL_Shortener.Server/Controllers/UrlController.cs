@@ -26,18 +26,18 @@ namespace URL_Shortener.Server.Controllers
         {
             return _service.GetUrls();
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<Result> CreateUrl([FromBody] UrlDTO url)
         {
             return await _service.CreateAsync(url);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete]
-        public Result DeleteAsync(long id)
+        public Result DeleteAsync(string url)
         {
-            return _service.Delete(id).IsSuccess ? Result.Ok() : Result.Fail(_service.Delete(id).Errors);
+            return _service.Delete(url).IsSuccess ? Result.Ok() : Result.Fail(_service.Delete(url).Errors);
         }
 
         /*[Authorize]

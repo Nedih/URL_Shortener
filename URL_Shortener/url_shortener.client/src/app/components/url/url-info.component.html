@@ -1,7 +1,10 @@
-<div class="container mt-4">
-  <h2>Short URL Info</h2>
-  <p><strong>Original URL:</strong> {{ url?.originalUrl }}</p>
-  <p><strong>Short URL:</strong> {{ url?.shortUrl }}</p>
-  <p><strong>Created By:</strong> {{ url?.createdBy }}</p>
-  <p><strong>Created Date:</strong> {{ url?.createdDate | date }}</p>
+<div class="url-details">
+  <h2>URL Details</h2>
+  <p><strong>Original URL:</strong> {{ selectedUrl?.urlText }}</p>
+  <p><strong>Shortened URL:</strong> <a [href]="selectedUrl?.shortenUrl" target="_blank">{{ selectedUrl?.shortenUrl }}</a></p>
+  <p><strong>Creation Date:</strong> {{ selectedUrl?.urlCreationDate }}</p>
+  <p><strong>Description:</strong> {{ selectedUrl?.urlDescription }}</p>
+  <p><strong>Created By:</strong> {{ selectedUrl?.userEmail }}</p>
+
+  <button (click)="goBack()">Back</button>
 </div>

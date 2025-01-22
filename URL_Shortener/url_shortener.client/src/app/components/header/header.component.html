@@ -3,10 +3,12 @@
     <ul>
       <li><a routerLink="/urls">Url List</a></li>
       <li><a routerLink="/about">About</a></li>
-      <li><a routerLink="/login">Login</a></li>
-      <li><a routerLink="/register">Register</a></li>
 
-      <!-- Show login/logout depending on user's status -->
+      <li *ngIf="!isLoggedIn()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+      <li *ngIf="!isLoggedIn()"><a routerLink="/register" routerLinkActive="active">Register</a></li>
+
+      <li *ngIf="isLoggedIn()"><a (click)="onLogout()">Logout</a></li>
+
     </ul>
   </nav>
 </header>

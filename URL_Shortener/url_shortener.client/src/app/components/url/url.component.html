@@ -10,19 +10,56 @@
       <tr>
         <th>Original URL</th>
         <th>Shortened URL</th>
-        <th>Creation Date</th>
-        <th>Description</th>
-        <th>User ID</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let url of urls">
         <td>{{ url.urlText }}</td>
-        <td><a [href]="url.shortenUrl" target="_blank">{{ "https://localhost:7214/" + url.shortenUrl }}</a></td>
-        <td>{{ url.urlCreationDate }}</td>
-        <td>{{ url.urlDescription }}</td>
-        <td>{{ url.userId }}</td>
+        <td><a>{{ "https://localhost:7214/" + url.shortenUrl }}</a></td>
+        <td>
+          <!-- View Details button -->
+          <button class="btn btn-info" (click)="viewUrlDetails(url)">
+            Details
+          </button>
+          <button *ngIf="isAdmin() || isUserOwner(url.userEmail)" (click)="deleteUrl(url.urlText)">
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- Modal structure -->
+<div class="modal fade"
+     id="infoModal"
+     tabindex="-1"
+     aria-labelledby="modalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">URL Details</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Original URL:</strong> {{ selectedUrl?.urlText }}</p>
+        <p><strong>Shortened URL:</strong> {{ selectedUrl?.shortenUrl }}</p>
+        <p><strong>Creation Date:</strong> {{ selectedUrl?.urlCreationDate }}</p>
+        <p><strong>Description:</strong> {{ selectedUrl?.urlDescription }}</p>
+        <p><strong>Created By:</strong> {{ selectedUrl?.userId }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

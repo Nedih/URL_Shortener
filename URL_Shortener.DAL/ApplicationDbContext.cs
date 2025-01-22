@@ -90,7 +90,7 @@
                 {
                     UserId = user.Id
                 };
-                userRole.RoleId = user.UserName.Contains("Admin")
+                userRole.RoleId = user.UserName.Contains("admin")
                     ? roles.FirstOrDefault(x => x.Name == "Admin").Id
                     : roles.FirstOrDefault(x => x.Name == "User").Id;
                 seedUserRoles.Add(userRole);

@@ -15,16 +15,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
-      tap(response => {
-
-        this.roles = response.roles;
-        localStorage.setItem('roles', JSON.stringify(this.roles));
-
-        this.loggedIn.next(true);
-      })
-    );
+  login(roles: string[]): void
+  {
+    localStorage.setItem('roles', JSON.stringify(roles));
+    this.loggedIn.next(true);
   }
 
   register(email: string, password: string): Observable<any> {
@@ -50,11 +44,18 @@ export class AuthService {
     return this.roles;
   }
 
-  isAdmin(): boolean {
-    return this.getRoles().includes('Admin');
+  isAdmin(): boolean | undefined {
+    let roles = localStorage.getItem('roles');
+    if (roles === null)
+      return false;
+    else return roles.includes('Admin');
   }
 
   getEmail(): string | null {
     return localStorage.getItem('email');
+  }
+
+  getId(): string | null {
+    return localStorage.getItem('userId');
   }
 }

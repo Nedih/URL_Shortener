@@ -8,6 +8,7 @@ using URL_Shortener.BLL.Interfaces;
 using URL_Shortener.BLL.Models;
 using URL_Shortener.DAL.Entities;
 using URL_Shortener.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace URL_Shortener.BLL.Services
 {
@@ -81,9 +82,9 @@ namespace URL_Shortener.BLL.Services
             return num;
         }
 
-        public Result Delete(long id)
+        public Result Delete(string url)
         {
-            var entity = _repository.FirstOrDefault(x => x.UrlId == id);
+            var entity = _repository.FirstOrDefault(x => x.UrlText == url);
             try
             {
                 _repository.Remove(entity);
@@ -110,7 +111,7 @@ namespace URL_Shortener.BLL.Services
 
         public List<UrlDTO> GetUrls()
         {
-            return _mapper.Map<List<UrlDTO>>(_repository.GetAll());
+            return _mapper.Map<List<UrlDTO>>(_repository.GetAll().Include(x => x.UserAccount));
         }
     }
 }
