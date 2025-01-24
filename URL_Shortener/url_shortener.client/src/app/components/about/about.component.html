@@ -2,19 +2,19 @@
   <header class="pageHeader">
     <h3><i class="fa fa-info-circle fa-lg page-caption" aria-hidden="true"></i> How to Convert an ID to a Shortened URL</h3>
   </header>
-    
-  <div class="reduced-font text-link">
-    <p>
-      How to Convert an ID to a Shortened URL
-      This page explains how a unique numeric ID can be converted into a shortened URL using a bijection-based algorithm. The process involves mapping the numeric ID to a short string using a base-62 encoding system (with characters a-z, A-Z, and 0-9).
 
-      The algorithm works by:
+  <div>
+    <div *ngIf="!isEditing" (click)="toggleEdit()">
+      <p>{{ userText }}</p>
+      <button *ngIf="isAdmin()" (click)="toggleEdit()">Edit</button>
+    </div>
 
-      Dividing the numeric ID by 62 and recording the remainder.
-      Mapping the remainder to a character from the defined alphabet.
-      Repeating the process with the quotient until it becomes 0.
-      The result is a short, unique string that can be used as the shortened URL. This system ensures that each ID maps to a unique shortened URL and vice versa, making the process both reversible and collision-free.
-    </p>
-
+    <div *ngIf="isEditing">
+      <textarea [(ngModel)]="userText" rows="4" cols="50"></textarea>
+      <br />
+      <button (click)="saveEdit()">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </div>
   </div>
+
 </div>

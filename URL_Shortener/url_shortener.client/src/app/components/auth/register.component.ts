@@ -3,12 +3,13 @@ import { AuthService } from './auth.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true, 
   templateUrl: './register.component.html',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIf],
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent{

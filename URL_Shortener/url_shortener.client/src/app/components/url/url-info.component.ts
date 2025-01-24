@@ -19,7 +19,6 @@ interface Url {
   selector: 'app-url-details',
   templateUrl: './url-info.component.html',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, RouterLinkActive],
   styleUrls: ['./url-info.component.css']
 })
 export class UrlDetailsComponent implements OnInit {

@@ -48,9 +48,15 @@ namespace URL_Shortener.Server.Controllers
         public async Task<IActionResult> Authenticate([FromBody] LoginViewModel user)
         {
             var loginResult = await _userAccountService.ValidateUserAsync(user);
+            var tokens = await _userAccountService.CreateTokensAsync(user);
+            var roles = await _userAccountService.GetUserClaimsAsync(user);
             return !loginResult.Succeeded
                 ? Unauthorized(loginResult.Errors)
-                : Ok(await _userAccountService.CreateTokensAsync(user));
+                : Ok(new { 
+                    tokens.AccessToken,
+                    tokens.RefreshToken,
+                    roles
+                });
         }
 
         [HttpPost]

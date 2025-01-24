@@ -20,7 +20,7 @@ interface Url {
   selector: 'app-url-table',
   templateUrl: './url.component.html',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, RouterLinkActive],
+  imports: [NgFor, NgIf],
   styleUrls: ['./url.component.scss'],
 })
 export class UrlTableComponent implements OnInit {
@@ -69,6 +69,7 @@ export class UrlTableComponent implements OnInit {
       },
       complete: () => {
         console.log('URL delete complete');
+        this.fetchUrls();
       }
     });
   }
@@ -79,7 +80,7 @@ export class UrlTableComponent implements OnInit {
 
   isAdmin() {
     let res = this.authService.isAdmin();
-    console.log(res);
+    console.log("Is ADMIN? " + res);
     return res;
   }
 
