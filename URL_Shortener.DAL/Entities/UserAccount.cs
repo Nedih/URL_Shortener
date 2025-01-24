@@ -8,6 +8,8 @@ namespace URL_Shortener.DAL.Entities
         [Required]
         public string Name { get; set; }
 
-        public List<Url> Urls { get; set; } 
+        public List<Url> Urls { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

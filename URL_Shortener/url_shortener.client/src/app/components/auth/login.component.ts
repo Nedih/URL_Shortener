@@ -49,7 +49,7 @@ export class LoginComponent{
         next: (response: any) => {
           console.log('Login successful:', response);
 
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.accessToken);
           localStorage.setItem('userId', response.userId);
           localStorage.setItem('email', email);
           this.authService.login(response.roles);

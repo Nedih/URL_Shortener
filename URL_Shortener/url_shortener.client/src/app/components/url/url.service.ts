@@ -37,6 +37,7 @@ export class UrlService {
     const { urlText, urlDescription, userEmail } = urlData;
     return this.http.post(`${environment.apiBaseUrl}/api/url/create`, { urlText, urlDescription, userEmail }, {
       headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'access-control-allow-origin': '*',
         'Content-Type': ['application/json', 'multipart/form-data'], 
       },

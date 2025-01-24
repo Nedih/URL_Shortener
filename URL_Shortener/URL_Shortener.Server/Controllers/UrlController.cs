@@ -27,8 +27,9 @@ namespace URL_Shortener.Server.Controllers
         {
             return _service.GetUrls();
         }
-        //[Authorize(Roles = "User, Admin")]
+        [Authorize(Policy = "UserPolicy")]
         [HttpPost("create")]
+        //[Authorize]
         public async Task<IActionResult> CreateUrl([FromBody] UrlDTO url)
         {
             var result = await _service.CreateAsync(url);
@@ -40,7 +41,7 @@ namespace URL_Shortener.Server.Controllers
             return BadRequest(string.Join(", ", result.Errors.Select(error => error.Message)));
         }
 
-        //[Authorize] //(Roles = "User, Admin")
+        [Authorize(Policy = "UserPolicy")]
         //[AllowAnonymous]
         [HttpDelete]
         public Result Delete(string shorten)
@@ -49,9 +50,9 @@ namespace URL_Shortener.Server.Controllers
             return res.IsSuccess ? Result.Ok() : Result.Fail(res.Errors);
         }
 
-        [Authorize(Roles = "User, Admin")]
+        //[Authorize(Roles = "User, Admin")]
         [HttpGet("{shorten}")]
-        public UrlDTO GetPost([FromQuery] string shorten)
+        public UrlDTO GetPost(string shorten)
         {
             return _service.GetUrl(shorten);
         }    

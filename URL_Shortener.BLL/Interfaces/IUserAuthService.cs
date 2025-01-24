@@ -9,5 +9,8 @@ namespace URL_Shortener.BLL.Interfaces
         Task<IdentityResult> RegisterUserAsync(RegisterViewModel model);
         Task<IdentityResult> ValidateUserAsync(LoginViewModel model);
         Task<List<string>> GetUserClaimsAsync(LoginViewModel user);
+        Task<string> CreateTokenAsync();
+        Task<TokenModel> CreateTokensAsync(LoginViewModel model);
+        Task<TokenModel> RefreshTokensAsync(TokenModel tokenModel);
     }
 }

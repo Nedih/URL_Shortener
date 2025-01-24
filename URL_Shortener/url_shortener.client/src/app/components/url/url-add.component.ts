@@ -51,10 +51,12 @@ export class UrlCreateComponent implements OnInit {
 
       const urlData = this.urlForm.value;
       const { urlText, urlDescription } = urlData;
-      const userEmail = this.authService.getEmail() || ''; 
+      const userEmail = this.authService.getEmail() || '';
+      const token = localStorage.getItem('token');
 
       this.http.post<UrlResponse>(`${environment.apiBaseUrl}/api/url/create`, { urlText, urlDescription, userEmail }, {
         headers: {
+          'Authorization': `Bearer ${token}`,
           'access-control-allow-origin': '*',
           'Content-Type': ['application/json', 'multipart/form-data'],
         },

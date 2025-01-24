@@ -34,6 +34,7 @@ export class UrlTableComponent implements OnInit {
   fetchUrls(){
     this.http.get<Url[]>(`${environment.apiBaseUrl}/api/url`, {
       headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         "access-control-allow-origin": "*",
         'Content-Type': ['application/json', 'multipart/form-data']
       },
@@ -55,6 +56,7 @@ export class UrlTableComponent implements OnInit {
   deleteUrl(shorten: string): void {
     this.http.delete(`${environment.apiBaseUrl}/api/url?shorten=${shorten}`, {
       headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         "access-control-allow-origin": "*",
         'Content-Type': ['application/json', 'multipart/form-data']
       },

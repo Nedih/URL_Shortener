@@ -11,24 +11,38 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<UserAccount, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureJWT(builder.Configuration);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(option => option.LoginPath = "/auth/login");
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/api/auth/login";
+            //options.AccessDeniedPath = "/Account/AccessDenied"; 
+            //options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            //options.Cookie.SameSite = SameSiteMode.None;
+            //options.Cookie.HttpOnly = true; 
+            //options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        });
+
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("UserOrAdmin", policy =>
-        policy.RequireRole("User", "Admin"));  // Restrict access to User or Admin roles
+    options.AddPolicy("UserPolicy", policy =>
+       policy.RequireRole("User", "Admin"));
 });
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddResponseCaching();
 
 builder.Services.AddApplication();
 
@@ -37,6 +51,7 @@ var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.ConfigureSwagger();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
@@ -55,7 +70,6 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -64,7 +78,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -72,7 +85,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-
+app.UseResponseCaching();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -80,9 +93,6 @@ app.UseAuthorization();
 app.UseCors("AllowAll");
 
 app.MapControllers();
-
-
-
 
 app.MapRazorPages();
 
