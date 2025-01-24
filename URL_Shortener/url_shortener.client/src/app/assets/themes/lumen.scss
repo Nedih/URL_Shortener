@@ -1,0 +1,18 @@
+@use '../styles/custom-variables';
+
+$table-bg-scale: 0% !default; // Fix for deprecation: https://sass-lang.com/d/function-units
+
+@use 'bootswatch/dist/lumen/variables';
+@use 'bootstrap/scss/bootstrap';
+@use 'bootswatch_fix/lumen'; // import from 'bootswatch/dist/lumen/bootswatch' when font import issue is fixed
+
+@use 'app-theme';
+
+
+.about-page {
+  .bg-features {
+    .logo {
+      color: #fbfbfb !important;
+    }
+  }
+}

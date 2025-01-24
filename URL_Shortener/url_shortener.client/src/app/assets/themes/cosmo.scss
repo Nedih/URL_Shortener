@@ -1,0 +1,12 @@
+@use '../styles/custom-variables';
+
+@use 'bootswatch/dist/cosmo/variables';
+@use 'bootstrap/scss/bootstrap';
+@use 'bootswatch_fix/cosmo'; // import from 'bootswatch/dist/cosmo/bootswatch' when font import issue is fixed
+
+@use 'app-theme';
+
+
+.icon-addon #searchInput.form-control {
+  border-radius: 5px;
+}

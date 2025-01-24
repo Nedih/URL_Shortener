@@ -1,33 +1,47 @@
-<div class="url-table ">
-    <h2>Shortened URLs</h2>
-    <button *ngIf="isLoggedIn()" class="btn btn-block" (click)="addUrl()">
-      New
+<div class="url-table container mt-5">
+  <h2 class="text-center mb-4">Shortened URLs</h2>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <p *ngIf="urls.length === 0" class="text-muted">
+      <em>No URLs found. Please add some.</em>
+    </p>
+    <button *ngIf="isLoggedIn()" class="btn btn-success" (click)="addUrl()">
+      <i class="glyphicon glyphicon-plus"></i> New
     </button>
+  </div>
 
-    
-    <p *ngIf="urls.length === 0"><em>No URLs found. Please add some.</em></p>
-
-    <table *ngIf="urls.length > 0" >
-      <thead>
+  <div class="table-responsive" *ngIf="urls.length > 0">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-dark">
         <tr>
           <th>Original URL</th>
           <th>Shortened URL</th>
-          <th>Actions</th>
+          <th *ngIf="isLoggedIn()">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let url of urls">
           <td>{{ url.urlText }}</td>
-          <td><a>{{ "https://localhost:7214/" + url.shortenUrl }}</a></td>
           <td>
-            <button *ngIf="isLoggedIn()" class="btn btn-info" (click)="viewUrlDetails(url.shortenUrl)">
-              Details
+            <a href="{{ 'https://localhost:7214/' + url.shortenUrl }}" target="_blank">
+              {{ "https://localhost:7214/" + url.shortenUrl }}
+            </a>
+          </td>
+          <td>
+            <button *ngIf="isLoggedIn()"
+                    class="btn btn-info btn-sm"
+                    (click)="viewUrlDetails(url.shortenUrl)">
+              <i class="glyphicon glyphicon-eye-open"></i> Details
             </button>
-            <button *ngIf="isAdmin() || isUserOwner(url.userEmail)" (click)="deleteUrl(url.shortenUrl)">
-              Delete
+            <button *ngIf="isAdmin() || isUserOwner(url.userEmail)"
+                    class="btn btn-danger btn-sm"
+                    (click)="deleteUrl(url.shortenUrl)">
+              <i class="glyphicon glyphicon-trash"></i> Delete
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
 </div>
+
