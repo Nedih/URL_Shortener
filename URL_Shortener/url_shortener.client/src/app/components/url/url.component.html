@@ -21,11 +21,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let url of urls">
-          <td>{{ url.urlText }}</td>
-          <td>
-            <a href="{{ 'https://localhost:7214/' + url.shortenUrl }}" target="_blank">
-              {{ "https://localhost:7214/" + url.shortenUrl }}
-            </a>
+          <td (click)="urlService.copyText(url.urlText)" class="url-text">
+            {{ url.urlText }}
+            <i class="fas fa-copy"></i>
+          </td>
+          <td (click)="urlService.copyText(url.urlText)" class="url-text">
+            {{ "https://localhost:7214/" + url.shortenUrl }}
+            <i class="fas fa-copy"></i>
           </td>
           <td *ngIf="isLoggedIn()">
             <div class="actions">

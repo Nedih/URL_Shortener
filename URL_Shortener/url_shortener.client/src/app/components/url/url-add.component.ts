@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UrlService } from './url.service'; // Make sure to create this service
+import { UrlService } from '../../services/url.service'; // Make sure to create this service
 import { NgIf } from '@angular/common';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -42,6 +42,10 @@ export class UrlCreateComponent implements OnInit {
 
   ngOnInit(): void {
     
+  }
+
+  goBack(): void {
+    window.history.back(); 
   }
 
   onSubmit(): void {

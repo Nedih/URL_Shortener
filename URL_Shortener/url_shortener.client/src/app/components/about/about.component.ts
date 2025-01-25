@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-about',

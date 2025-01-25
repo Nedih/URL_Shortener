@@ -4,12 +4,12 @@
       <span>URL_Shortener App</span> 
     </div>
     <ul class="nav-links-left">
-      <li><a routerLink="/urls" routerLinkActive="active">Url List</a></li>
-      <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+      <li><a routerLink="/urls" routerLinkActive="active" (click)="onClick($event)">Url List</a></li>
+      <li><a routerLink="/about" routerLinkActive="active" (click)="onClick($event)">About</a></li>
     </ul>
     <ul class="nav-links-right">
-      <li *ngIf="!isLoggedIn()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
-      <li *ngIf="!isLoggedIn()"><a routerLink="/register" routerLinkActive="active">Register</a></li>
+      <li *ngIf="!isLoggedIn()"><a routerLink="/login" routerLinkActive="active" (click)="onClick($event)">Login</a></li>
+      <li *ngIf="!isLoggedIn()"><a routerLink="/register" routerLinkActive="active" (click)="onClick($event)">Register</a></li>
       <li *ngIf="isLoggedIn()"><a (click)="onLogout()" class="logout-link">Logout</a></li>
     </ul>
   </nav>

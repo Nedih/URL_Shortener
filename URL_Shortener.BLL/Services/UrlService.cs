@@ -123,7 +123,7 @@ namespace URL_Shortener.BLL.Services
 
         public UrlDTO? GetUrl(string url)
         {
-            return _mapper.Map<UrlDTO>(_repository.FirstOrDefault(x => x.ShortenUrl == url));
+            return _mapper.Map<UrlDTO>(_repository.Include(x => x.UserAccount).FirstOrDefault(x => x.ShortenUrl == url));
         }
     }
 }

@@ -3,7 +3,9 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/r
 import { environment } from '../../../environments/environment';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { MatListModule } from '@angular/material/list';
+import { UrlService } from '../../services/url.service';
 //import { MatTableModule } from '@angular/material/table';
 
 interface Url {
@@ -19,19 +21,20 @@ interface Url {
   selector: 'app-url-details',
   templateUrl: './url-info.component.html',
   standalone: true,
-  styleUrls: ['./url-info.component.scss']
+  styleUrls: ['./url-info.component.scss'],
+  imports: [MatListModule]
 })
 export class UrlDetailsComponent implements OnInit {
   public selectedUrl: Url | undefined; 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthService, public urlService: UrlService, private router: Router) { }
 
   ngOnInit(): void {
 
     const shortenUrl = this.route.snapshot.paramMap.get('shortenUrl') || '';
 
     //this.fetchUrl(shortenUrl);
-    this.fetchUrls(shortenUrl);
+    this.fetchUrl(shortenUrl);
 
     console.log(shortenUrl); 
   }

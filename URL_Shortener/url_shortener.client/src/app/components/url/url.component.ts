@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import $ from 'jquery';
+import { UrlService } from '../../services/url.service';
 //import { MatCardModule } from '@angular/material/card';
 
 interface Url {
@@ -27,7 +28,7 @@ export class UrlTableComponent implements OnInit {
   public urls: Url[] = [];
   public selectedUrl: Url | null = null;
 
-  constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
+  constructor(private http: HttpClient, private authService: AuthService, public urlService: UrlService, private router: Router) { }
 
   ngOnInit() { this.fetchUrls();}
 

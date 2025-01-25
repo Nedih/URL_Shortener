@@ -2,47 +2,95 @@
   background-color: #2a3036;
   color: #ffffff;
   border-radius: 10px;
-  padding: 20px 50px;
-  max-width: 50%;
+  width: 100%;
+  justify-content: center;
+  max-width: 50vw;
   margin: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  word-wrap: break-word;
+  //word-break: break-word !important;
+  word-break: break-all;
 
   h2 {
     text-align: center;
     font-size: 2.2rem;
     color: #00bcd4;
-    margin-bottom: 20px;
+    margin: 0;
   }
 
-  p {
-    font-size: 15pt;
-    margin: 10px 0;
-    line-height: 1.5;
+  .url-inner-details {
+    padding: 20px 50px 30px 50px;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word;
 
-    strong {
-      color: #00bcd4;
+    .mat-list-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .url-text {
+      display: inline-block; 
+      cursor: pointer; 
+    }
+
+    p {
+      font-size: 15pt;
+      margin: 10px 0;
+      line-height: 1.5;
+
+      strong {
+        color: #00bcd4;
+      }
+    }
+
+    span {
+      font-size: 15pt;
+      //margin: 10px 0;
+      //line-height: 1.5;
+      color: #f8f9fa;
+
+      strong {
+        color: #00bcd4;
+      }
     }
   }
 
-  button {
-    display: block;
-    margin: 20px auto;
-    padding: 5px 20px;
-    background-color: #00bcd4;
-    color: #ffffff;
+  .btn-back {
+    top: 10px;
+    left: 10px;
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
-    font-size: 2rem;
+    color: #939496;
+    font-size: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+    padding: 10px 15px;
+  }
 
-    &:hover {
-      background-color: #028a9d;
-    }
+  .btn-back i {
+    margin-right: 8px;
+  }
 
-    &:active {
-      background-color: #02677a;
-    }
+  .btn-back:hover {
+    color: #028a9d;
+  }
+}
+
+.url-text:hover i {
+  display: inline-flex;
+  color: #939496;
+}
+
+.url-text i {
+  color: transparent;
+  //display: none;
+  font-size: 1.4rem;
+}
+
+/* Responsiveness */
+@media (max-width: 500px) {
+  .url-details {
+    width: 90%;
   }
 }

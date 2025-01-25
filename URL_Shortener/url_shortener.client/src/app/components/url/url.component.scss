@@ -105,3 +105,20 @@ h2 {
 .container {
   margin-top: 0 !important;
 }
+
+.url-text {
+  //display: inline-block;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.url-text:hover i {
+  display: inline-flex;
+  color: #939496;
+}
+
+.url-text i {
+  color: transparent;
+  //display: none;
+  font-size: 1.4rem;
+}

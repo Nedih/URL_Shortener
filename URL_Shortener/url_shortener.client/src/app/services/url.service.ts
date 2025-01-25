@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 
 export interface URL {
@@ -47,5 +47,16 @@ export class UrlService {
 
   getUrlById(id: number): Observable<URL> {
     return this.http.get<URL>(`${this.apiUrl}/${id}`);
+  }
+
+  copyText(text: string | undefined) {
+    if (text)
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          alert('Text copied to clipboard!');
+        })
+        .catch(err => {
+          console.error('Failed to copy text: ', err);
+        });
   }
 }

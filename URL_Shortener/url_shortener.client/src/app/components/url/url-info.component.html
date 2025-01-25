@@ -1,10 +1,45 @@
 <div class="url-details">
+  <button class="btn-back" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
   <h2>URL Details</h2>
-  <p><strong>Original URL:</strong> {{ selectedUrl?.urlText }}</p>
-  <p><strong>Shortened URL:</strong> {{ "https://localhost:7214/" + selectedUrl?.shortenUrl }}</p>
-  <p><strong>Creation Date:</strong> {{ selectedUrl?.urlCreationDate }}</p>
-  <p><strong>Description:</strong> {{ selectedUrl?.urlDescription }}</p>
-  <p><strong>Created By:</strong> {{ selectedUrl?.userEmail }}</p>
-
-  <button (click)="goBack()">Back</button>
+  <div class="url-inner-details">
+    <div class="mat-list">
+      <div class="mat-list-item">
+        <span matListItemTitle><strong>Original URL:</strong></span>
+        <span class="url-text" (click)="urlService.copyText(selectedUrl?.urlText)">
+          {{ selectedUrl?.urlText }}
+          <i class="fas fa-copy"></i>
+        </span>
+      </div>
+      <div class="mat-list-item">
+        <span matListItemTitle><strong>Shortened URL:</strong></span>
+        <span matListItemLine class="url-text" (click)="urlService.copyText('https://localhost:7214/' + selectedUrl?.shortenUrl)">
+          {{ "https://localhost:7214/" + selectedUrl?.shortenUrl }}
+          <i class="fas fa-copy"></i>
+        </span>
+      </div>
+      <div class="mat-list-item">
+        <span matListItemTitle><strong>Created By:</strong></span>
+        <span matListItemLine class="url-text" (click)="urlService.copyText(selectedUrl?.userEmail)">
+          {{ selectedUrl?.userEmail }}
+          <i class="fas fa-copy"></i>
+        </span>
+      </div>
+      <div class="mat-list-item">
+        <span matListItemTitle><strong>Description:</strong></span>
+        <span matListItemLine class="url-text" (click)="urlService.copyText(selectedUrl?.urlDescription)">
+          {{ selectedUrl?.urlDescription }}
+          <i class="fas fa-copy"></i>
+        </span>
+      </div>
+      <div class="mat-list-item">
+        <span matListItemTitle><strong>Creation Date:</strong></span>
+        <span matListItemLine class="url-text" (click)="urlService.copyText(selectedUrl?.urlCreationDate)">
+          {{ selectedUrl?.urlCreationDate }}
+          <i class="fas fa-copy"></i>
+        </span>
+      </div>
+    </div>
+  </div>
 </div>

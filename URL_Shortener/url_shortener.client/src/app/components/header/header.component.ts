@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink, RouterLinkActive} from '@angular/router';
 import { NgIf } from '@angular/common';
 //import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,6 +11,7 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent{
+  clickedItem: any = null;
   constructor(private authService: AuthService) { }
 
   isLoggedIn() : boolean {
@@ -23,6 +24,17 @@ export class HeaderComponent{
 
   onLogin(): void {
     
+  }
+
+  onClick(event: Event) {
+    const li = event.target as HTMLElement;
+
+    if (this.clickedItem) {
+      this.clickedItem.classList.remove('clicked');
+    }
+
+    li.classList.add('clicked');
+    this.clickedItem = li; 
   }
 }
 

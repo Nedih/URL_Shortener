@@ -55,6 +55,12 @@ nav ul {
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
+      nav ul li a.clicked {
+        background-color: #028a9d; /* Change background color on click */
+        color: #fff; /* Change text color */
+        font-weight: bold; /* Example additional style */
+      }
+
       nav ul li a:hover {
         background-color: #3e444c;
         color: #fff;
