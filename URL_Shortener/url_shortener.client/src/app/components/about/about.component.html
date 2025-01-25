@@ -1,20 +1,28 @@
 <div class="about-page">
-  <header class="pageHeader">
-    <h3><i class="fa fa-info-circle fa-lg page-caption" aria-hidden="true"></i> How to Convert an ID to a Shortened URL</h3>
-  </header>
-
-  <div>
-    <div *ngIf="!isEditing" (click)="toggleEdit()">
+  <div class="pageHeader">
+    <h3><i class="fa fa-info-circle"></i> About</h3>
+    <h3>How to Convert an ID to a Shortened URL</h3>
+  </div>
+  
+  <div class="about-text">
+    <div *ngIf="!isEditing" (click)="toggleEdit()" class="text-container">
       <p>{{ userText }}</p>
-      <button *ngIf="isAdmin()" (click)="toggleEdit()">Edit</button>
     </div>
 
-    <div *ngIf="isEditing">
-      <textarea [(ngModel)]="userText" rows="4" cols="50"></textarea>
-      <br />
-      <button (click)="saveEdit()">Save</button>
-      <button (click)="cancelEdit()">Cancel</button>
+    <div *ngIf="isEditing" class="text-container">
+      <mat-form-field [style.fontSize]="fontSize">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="30"
+                  [(ngModel)]="userText"></textarea>
+      </mat-form-field>
+
+      <div class="action-buttons">
+        <button mat-button (click)="saveEdit()">Save</button>
+        <button mat-button (click)="cancelEdit()">Cancel</button>
+      </div>
     </div>
   </div>
-
 </div>
