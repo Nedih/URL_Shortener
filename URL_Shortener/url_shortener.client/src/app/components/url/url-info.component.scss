@@ -1,0 +1,48 @@
+.url-details {
+  background-color: #2a3036;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 20px 50px;
+  max-width: 50%;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
+
+  h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #00bcd4;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 15pt;
+    margin: 10px 0;
+    line-height: 1.5;
+
+    strong {
+      color: #00bcd4;
+    }
+  }
+
+  button {
+    display: block;
+    margin: 20px auto;
+    padding: 5px 20px;
+    background-color: #00bcd4;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #028a9d;
+    }
+
+    &:active {
+      background-color: #02677a;
+    }
+  }
+}

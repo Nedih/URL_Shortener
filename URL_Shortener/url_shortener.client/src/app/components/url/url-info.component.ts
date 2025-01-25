@@ -19,7 +19,7 @@ interface Url {
   selector: 'app-url-details',
   templateUrl: './url-info.component.html',
   standalone: true,
-  styleUrls: ['./url-info.component.css']
+  styleUrls: ['./url-info.component.scss']
 })
 export class UrlDetailsComponent implements OnInit {
   public selectedUrl: Url | undefined; 

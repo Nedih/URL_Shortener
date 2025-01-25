@@ -8,7 +8,9 @@
 @use 'app/assets/styles/styles-vendor';
 
 body, html {
-  height: 100%
+  height: 100%;
+  background-color: #3e444c !important;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(url-background.png);
 }
 
 html[dir="rtl"] {

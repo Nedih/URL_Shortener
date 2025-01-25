@@ -1,15 +1,16 @@
-<header>
-  <nav>
-    <ul>
-      <li><a routerLink="/urls">Url List</a></li>
-      <li><a routerLink="/about">About</a></li>
 
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="logo">
+      <span>URL_Shortener App</span> 
+    </div>
+    <ul class="nav-links-left">
+      <li><a routerLink="/urls" routerLinkActive="active">Url List</a></li>
+      <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+    </ul>
+    <ul class="nav-links-right">
       <li *ngIf="!isLoggedIn()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
       <li *ngIf="!isLoggedIn()"><a routerLink="/register" routerLinkActive="active">Register</a></li>
-
-      <li *ngIf="isLoggedIn()"><a (click)="onLogout()">Logout</a></li>
-
+      <li *ngIf="isLoggedIn()"><a (click)="onLogout()" class="logout-link">Logout</a></li>
     </ul>
   </nav>
-</header>
 

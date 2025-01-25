@@ -27,17 +27,19 @@
               {{ "https://localhost:7214/" + url.shortenUrl }}
             </a>
           </td>
-          <td>
-            <button *ngIf="isLoggedIn()"
-                    class="btn btn-info btn-sm"
-                    (click)="viewUrlDetails(url.shortenUrl)">
-              <i class="glyphicon glyphicon-eye-open"></i> Details
-            </button>
-            <button *ngIf="isAdmin() || isUserOwner(url.userEmail)"
-                    class="btn btn-danger btn-sm"
-                    (click)="deleteUrl(url.shortenUrl)">
-              <i class="glyphicon glyphicon-trash"></i> Delete
-            </button>
+          <td *ngIf="isLoggedIn()">
+            <div class="actions">
+              <button *ngIf="isLoggedIn()"
+                      class="btn btn-info btn-sm"
+                      (click)="viewUrlDetails(url.shortenUrl)">
+                <i class="glyphicon glyphicon-eye-open"></i> Details
+              </button>
+              <button *ngIf="isAdmin() || isUserOwner(url.userEmail)"
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteUrl(url.shortenUrl)">
+                <i class="glyphicon glyphicon-trash"></i> Delete
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
