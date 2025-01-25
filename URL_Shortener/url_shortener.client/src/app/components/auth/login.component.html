@@ -2,7 +2,6 @@
   <h2>Login</h2>
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <!-- Email Field -->
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email"
@@ -16,7 +15,6 @@
       </div>
     </div>
 
-    <!-- Password Field -->
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password"
@@ -30,16 +28,12 @@
       </div>
     </div>
 
-    <!-- Error Message -->
     <div *ngIf="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
     </div>
 
-    <!-- Submit Button -->
     <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || loginForm.invalid">
       {{ isSubmitting ? 'Logging in...' : 'Login' }}
     </button>
   </form>
 </div>
-
-

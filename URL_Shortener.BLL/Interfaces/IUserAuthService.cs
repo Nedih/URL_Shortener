@@ -7,10 +7,10 @@ namespace URL_Shortener.BLL.Interfaces
     public interface IUserAuthService
     {
         Task<IdentityResult> RegisterUserAsync(RegisterViewModel model);
-        Task<IdentityResult> ValidateUserAsync(LoginViewModel model);
-        Task<List<string>> GetUserClaimsAsync(LoginViewModel user);
+        Task<AuthResponse> ValidateUserAsync(LoginViewModel model);
+        Task<List<string>> GetUserClaimsAsync(UserAccount user);
         Task<string> CreateTokenAsync();
-        Task<TokenModel> CreateTokensAsync(LoginViewModel model);
+        Task<TokenModel> CreateTokensAsync(UserAccount model);
         Task<TokenModel> RefreshTokensAsync(TokenModel tokenModel);
     }
 }
