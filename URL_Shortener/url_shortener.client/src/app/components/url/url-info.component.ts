@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { NgFor, NgIf } from '@angular/common';
@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { MatListModule } from '@angular/material/list';
 import { UrlService } from '../../services/url.service';
+import { LoadingService } from '../../services/loading-service';
 //import { MatTableModule } from '@angular/material/table';
 
 interface Url {
@@ -27,13 +28,21 @@ interface Url {
 export class UrlDetailsComponent implements OnInit {
   public selectedUrl: Url | undefined; 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthService, public urlService: UrlService, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private authService: AuthService,
+    public urlService: UrlService,
+    private router: Router,
+    public loadingService: LoadingService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
-
+    this.loadingService.show();
+    this.changeDetectorRef.detectChanges();
+    
     const shortenUrl = this.route.snapshot.paramMap.get('shortenUrl') || '';
-
-    //this.fetchUrl(shortenUrl);
     this.fetchUrl(shortenUrl);
 
     console.log(shortenUrl); 
@@ -65,6 +74,8 @@ export class UrlDetailsComponent implements OnInit {
       },
       complete: () => {
         console.log('URL fetch complete');
+        this.loadingService.hide();
+        this.changeDetectorRef.detectChanges();
       }
     });
   }

@@ -1,13 +1,15 @@
 <div class="app-component app-container">
-  <!-- App Header -->
+
   <app-header></app-header>
 
-  <!-- Routed Content -->
   <main class="content">
+    <div *ngIf="isLoading()" class="global-loader">
+      <p>Loading...</p>
+      <mat-progress-bar mode="indeterminate" title="Loading">Loading...</mat-progress-bar>
+    </div>
     <router-outlet></router-outlet>
   </main>
 
-  <!-- Footer -->
   <footer class="app-footer">
     <p>&copy; 2025 URL Shortener</p>
   </footer>

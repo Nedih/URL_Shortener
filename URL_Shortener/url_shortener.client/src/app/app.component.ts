@@ -1,17 +1,30 @@
-import { Component } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
-import { HttpClient } from '@angular/common/http';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LoadingService } from './services/loading-service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  imports: [RouterOutlet, HeaderComponent]
+  imports: [
+    NgIf,
+    RouterOutlet,
+    HeaderComponent,
+    MatProgressBarModule
+  ]
 })
-export class AppComponent{
-
+export class AppComponent {
   title = 'URL Shortener';
+  
+  constructor(
+    public loadingService: LoadingService,
+    private cdr: ChangeDetectorRef
+  ){}
 
-  constructor(private http: HttpClient) { }
+  isLoading(): boolean{
+    return this.loadingService.get();
+  }
 }

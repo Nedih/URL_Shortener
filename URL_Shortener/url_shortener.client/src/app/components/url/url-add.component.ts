@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UrlService } from '../../services/url.service'; // Make sure to create this service
+import { UrlService } from '../../services/url.service'; 
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { LoadingService } from '../../services/loading-service';
 
 interface UrlResponse {
   shortenUrl: string;
-  // other properties if needed
 }
 
 @Component({
@@ -19,7 +19,7 @@ interface UrlResponse {
   imports: [NgIf, FormsModule, ReactiveFormsModule],
   styleUrls: ['./url-add.component.scss']
 })
-export class UrlCreateComponent implements OnInit {
+export class UrlCreateComponent {
   urlForm: FormGroup;
   errorMessage: string | null = null;
   isSubmitting = false;
@@ -29,8 +29,8 @@ export class UrlCreateComponent implements OnInit {
     private http: HttpClient,
     //private urlService: UrlService,
     private router: Router,
-    private authService: AuthService
-    
+    private authService: AuthService,
+    public loadingService: LoadingService
   )
   {
     this.urlForm = this.fb.group({
@@ -38,10 +38,6 @@ export class UrlCreateComponent implements OnInit {
       urlDescription: ['', [Validators.required, Validators.minLength(10)]] 
     }
     );
-  }
-
-  ngOnInit(): void {
-    
   }
 
   goBack(): void {

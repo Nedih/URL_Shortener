@@ -58,11 +58,9 @@
   }
 
   .actions {
-    display: flex; /* Enable Flexbox for the cell */
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    //gap: 1rem; /* Add spacing between the buttons */
-    //padding: 1rem; /* Add padding to ensure spacing from the cell edges */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
   }
 }
 
@@ -121,4 +119,24 @@ h2 {
   color: transparent;
   //display: none;
   font-size: 1.4rem;
+}
+
+.no-urls-message {
+  text-align: center;
+  color: #6c757d; 
+  font-size: 16px;
+  font-style: italic;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa; 
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.no-urls-message em {
+  font-weight: bold;
+  color: #007bff; 
 }
