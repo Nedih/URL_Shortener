@@ -79,7 +79,7 @@ namespace URL_Shortener.Server.Extensions
         }
         public static void AddApplication(this IServiceCollection services)
         {
-            services.AddTransient<IUserAuthService, UserAuthService>();
+            services.AddTransient<IUserAuthService, AuthService>();
             services.AddTransient<IRepository<Url>, Repository<Url>>();
             services.AddTransient<IRepository<UserAccount>, Repository<UserAccount>>();
             services.AddTransient<IUserService, UserService>();

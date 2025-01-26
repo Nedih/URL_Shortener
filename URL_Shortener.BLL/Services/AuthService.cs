@@ -18,16 +18,16 @@ using URL_Shortener.DAL.Entities;
 
 namespace URL_Shortener.BLL.Services
 {
-    public class UserAuthService : IUserAuthService
+    public class AuthService : IUserAuthService
     {
         private readonly UserManager<UserAccount> _userManager;
         private readonly IConfiguration _configuration;
         private UserAccount? _user;
 
-        public UserAuthService(UserManager<UserAccount> userManager, IConfiguration configuration)
+        public AuthService(UserManager<UserAccount> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
-            _configuration = configuration;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public async Task<List<string>> GetUserClaimsAsync(UserAccount user)
@@ -56,11 +56,11 @@ namespace URL_Shortener.BLL.Services
         {
             _user = await _userManager.FindByNameAsync(model.Email);
             if (_user == null)
-                return AuthResponse.Failure(new IdentityError { Description = "There is no account with this email", Code = "WrongEmail" });
+                return AuthResponse.Failure(new { Errors = new { Description = "There is no account with this email", Code = "WrongEmail" } });
             if (!await _userManager.CheckPasswordAsync(_user, model.Password))
-                return AuthResponse.Failure(new IdentityError { Description = "You entered wrong password", Code = "WrongPassword" });
+                return AuthResponse.Failure(new { Errors = new { Description = "You entered wrong password", Code = "WrongPassword" } });
             if (await _userManager.IsLockedOutAsync(_user))
-                return AuthResponse.Failure(new { Description = "Your account is locked", Code = "UserLocked" });
+                return AuthResponse.Failure(new { Errors = new { Description = "Your account is locked", Code = "UserLocked" } });
             var tokens = await CreateTokensAsync(_user);
             var roles = await GetUserClaimsAsync(_user);
             return AuthResponse.Success(new { Tokens = tokens, Roles = roles });
@@ -103,7 +103,12 @@ namespace URL_Shortener.BLL.Services
 
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            if (user == null)
+            {
+                return new TokenModel { Exception = "Invalid access token" };
+            }
+
+            if (user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
                 return new TokenModel { Exception = "Invalid refresh token" };
             }
@@ -139,7 +144,7 @@ namespace URL_Shortener.BLL.Services
             var jwtConfig = _configuration.GetSection("jwtConfig");
             var jwtSecret = jwtConfig["Secret"] 
                 ?? throw new ArgumentNullException(
-                    "validIssuer",
+                    "secret",
                     "JWT valid issuer is missing in the configuration."
                 );
             var key = Encoding.UTF8.GetBytes(jwtSecret);
