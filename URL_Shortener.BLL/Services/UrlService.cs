@@ -39,6 +39,8 @@ namespace URL_Shortener.BLL.Services
                 
                 var author = await _userManager.FindByEmailAsync(urlModel.UserEmail);
 
+                if (author == null) return Result.Fail("User with this email doesn't exist");
+
                 var url = _mapper.Map<Url>(urlModel);
 
                 var shortURL = Encode(url.UrlId);
@@ -54,7 +56,7 @@ namespace URL_Shortener.BLL.Services
             }
             catch (Exception ex)
             {
-                return Result.Fail(ex.InnerException.Message);
+                return Result.Fail(ex?.InnerException?.Message);
             }
         }
 
@@ -98,7 +100,7 @@ namespace URL_Shortener.BLL.Services
             }
             catch (Exception ex)
             {
-                return Result.Fail(new Error(ex.InnerException.Message));
+                return Result.Fail(new Error(ex?.InnerException?.Message));
             }
             return Result.Ok();
         }
@@ -111,7 +113,7 @@ namespace URL_Shortener.BLL.Services
             }
             catch (Exception ex)
             {
-                return Result.Fail(new Error(ex.InnerException.Message));
+                return Result.Fail(new Error(ex?.InnerException?.Message));
             }
             return Result.Ok();
         }
