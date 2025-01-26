@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentResults;
 
 namespace URL_Shortener.BLL.Models.Identity
 {
@@ -11,7 +12,7 @@ namespace URL_Shortener.BLL.Models.Identity
         public bool Succeeded { get; set; }
         public TokenModel? Tokens { get; set; }
         public ICollection<string>? Roles { get; set; }
-        public IEnumerable<string>? Errors { get; set; }
+        public AuthError? Error { get; set; }
 
         public static AuthResponse Success(TokenModel tokens, ICollection<string> roles)
         {
@@ -20,7 +21,7 @@ namespace URL_Shortener.BLL.Models.Identity
                 Succeeded = true,
                 Tokens = tokens,
                 Roles = roles,
-                Errors = null
+                Error = null
             };
         }
         public static AuthResponse Success(dynamic data)
@@ -30,17 +31,17 @@ namespace URL_Shortener.BLL.Models.Identity
                 Succeeded = true,
                 Tokens = data.Tokens,
                 Roles = data.Roles,
-                Errors = null
+                Error = null
             };
         }
-        public static AuthResponse Failure(IEnumerable<string> errors)
+        public static AuthResponse Failure(AuthError error)
         {
             return new AuthResponse
             {
                 Succeeded = false,
                 Tokens = null,
                 Roles = null,
-                Errors = errors
+                Error = error
             };
         }
         public static AuthResponse Failure(dynamic data)
@@ -50,7 +51,7 @@ namespace URL_Shortener.BLL.Models.Identity
                 Succeeded = false,
                 Tokens = null,
                 Roles = null,
-                Errors = data.Errors
+                Error = data.Error
             };
         }
     }

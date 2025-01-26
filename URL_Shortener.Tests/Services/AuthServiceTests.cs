@@ -85,7 +85,7 @@ namespace URL_Shortener.Tests.Services
 
             // Assert
             Assert.False(result.Succeeded);
-            Assert.Equal("WrongEmail", result?.Errors?.First());
+            Assert.Equal("WrongEmail", result?.Error?.Code);
         }
 
         [Fact]

@@ -50,7 +50,7 @@ namespace URL_Shortener.Server.Controllers
             var loginResult = await _userAccountService.ValidateUserAsync(user);
             
             return !loginResult.Succeeded
-                ? Unauthorized(loginResult.Errors)
+                ? Unauthorized(loginResult.Error)
                 : Ok(new {
                     loginResult.Tokens?.AccessToken,
                     loginResult.Tokens?.RefreshToken,

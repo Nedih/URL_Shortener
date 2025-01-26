@@ -56,11 +56,11 @@ namespace URL_Shortener.BLL.Services
         {
             _user = await _userManager.FindByNameAsync(model.Email);
             if (_user == null)
-                return AuthResponse.Failure(new { Errors = new { Description = "There is no account with this email", Code = "WrongEmail" } });
+                return AuthResponse.Failure(new AuthError("WrongEmail", "There is no account with this email")); 
             if (!await _userManager.CheckPasswordAsync(_user, model.Password))
-                return AuthResponse.Failure(new { Errors = new { Description = "You entered wrong password", Code = "WrongPassword" } });
+                return AuthResponse.Failure(new AuthError("WrongPassword", "You entered wrong password")); 
             if (await _userManager.IsLockedOutAsync(_user))
-                return AuthResponse.Failure(new { Errors = new { Description = "Your account is locked", Code = "UserLocked" } });
+                return AuthResponse.Failure(new AuthError("UserLocked", "Your account is locked"));
             var tokens = await CreateTokensAsync(_user);
             var roles = await GetUserClaimsAsync(_user);
             return AuthResponse.Success(new { Tokens = tokens, Roles = roles });
@@ -142,10 +142,10 @@ namespace URL_Shortener.BLL.Services
         private SigningCredentials GetSigningCredentials()
         {
             var jwtConfig = _configuration.GetSection("jwtConfig");
-            var jwtSecret = jwtConfig["Secret"] 
+            var jwtSecret = jwtConfig["secret"] 
                 ?? throw new ArgumentNullException(
                     "secret",
-                    "JWT valid issuer is missing in the configuration."
+                    "JWT secret is missing in the configuration."
                 );
             var key = Encoding.UTF8.GetBytes(jwtSecret);
             var secret = new SymmetricSecurityKey(key);
