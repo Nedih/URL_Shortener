@@ -25,7 +25,7 @@ namespace URL_Shortener.Server.Controllers
             return _userService.GetUsers();
         }
 
-        [Authorize]
+        /*[Authorize]
         [HttpGet("profile")]
         public IActionResult GetOwnProfile()
         {
@@ -36,15 +36,15 @@ namespace URL_Shortener.Server.Controllers
             if (profile == null)
                 return NotFound("No such user with this id");
             return Ok(profile);
-        }
+        }*/
 
-        [Authorize]
+        /*[Authorize]
         [HttpPut("profile")]
         public async Task<IdentityResult> UpdateUserProfile([FromBody] ProfileDTO user)
         {
             string? id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return await _userService.UpdateUser(id, user);
-        }    
+        }*/ 
 
         [Authorize]
         [HttpGet("users-list")]

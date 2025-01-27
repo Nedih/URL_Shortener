@@ -5,15 +5,25 @@ export const routes: Routes = [
   //{ path: '', redirectTo: '/urls', pathMatch: 'full' },
   {
     path: '',
-    loadComponent: () => import('./components/url/url.component').then(m => m.UrlTableComponent),//component: UrlTableComponent,
+    loadComponent: () => import('./components/url/url.component').then(m => m.UrlTableComponent),
     title: 'Urls'
   },
   {
     path: 'urls',
-    loadComponent: () => import('./components/url/url.component').then(m => m.UrlTableComponent),//component: UrlTableComponent,
+    loadComponent: () => import('./components/url/url.component').then(m => m.UrlTableComponent),
     title: 'Urls'
   },
-  //{ path: 'about', component: AboutComponent },
+  //{ path: 'about', component: AboutComponent },/url-details
+  {
+    path: 'url-add',
+    loadComponent: () => import('./components/url/url-add.component').then(m => m.UrlCreateComponent),
+    title: 'Url Add'
+  },
+  {
+    path: 'url-details/:shortenUrl',
+    loadComponent: () => import('./components/url/url-info.component').then(m => m.UrlDetailsComponent),
+    title: 'Url Details'
+  },
   {
     path: 'about',
     loadComponent: () => import('./components/about/about.component').then(m => m.AboutComponent),

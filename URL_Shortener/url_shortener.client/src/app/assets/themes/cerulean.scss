@@ -1,0 +1,15 @@
+@use '../styles/custom-variables';
+
+@use 'bootswatch/dist/cerulean/variables';
+@use 'bootstrap/scss/bootstrap';
+@use 'bootswatch/dist/cerulean/bootswatch';
+
+@use 'app-theme';
+
+.app-component {
+  .navbar {
+    .popover-header {
+      color: $headings-color !important;
+    }
+  }
+}

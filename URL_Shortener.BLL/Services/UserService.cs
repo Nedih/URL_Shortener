@@ -59,13 +59,19 @@ namespace URL_Shortener.BLL.Services
         public async Task<IdentityResult> UpdateUser(string id, UserDTO userDto)
         {
             var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+                return IdentityResult.Failed(new IdentityError { Description = "There is no such user.", Code = "WrongID" });
             return await Update(user, userDto);
         }
 
         public async Task<IdentityResult> UpdateUser(string id, ProfileDTO profile)
         {
             var user = await userManager.FindByIdAsync(id);
-            return await Update(user, new UserDTO(user.Id, user.Email, profile));
+
+            if (user == null)
+                return IdentityResult.Failed(new IdentityError { Description = "There is no such user.", Code = "WrongID" });
+
+            return await Update(user, new UserDTO(user.Id, user.Email!, profile));
         }
 
         public async Task<IdentityResult> Update(UserAccount user, UserDTO userDto)
@@ -110,7 +116,7 @@ namespace URL_Shortener.BLL.Services
 
         public async Task<IdentityResult> CreateUser(RegisterViewModel userDto)
         {
-            UserAccount user = await userManager.FindByEmailAsync(userDto.Email);
+            UserAccount? user = await userManager.FindByEmailAsync(userDto.Email);
             if (user == null)
             {
                 user = _mapper.Map<UserAccount>(userDto);

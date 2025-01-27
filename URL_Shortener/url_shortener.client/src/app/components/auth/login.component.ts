@@ -1,15 +1,16 @@
 import { Component} from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ NgIf, FormsModule, ReactiveFormsModule],
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent{
@@ -37,12 +38,18 @@ export class LoginComponent{
     this.isSubmitting = true;
     const { email, password } = this.loginForm.value;
 
-    this.http.post(`${environment.apiBaseUrl}/api/auth/login`, { email, password })
+    this.http.post(`${environment.apiBaseUrl}/api/auth/login`, { email, password }, {
+      headers: {
+        "access-control-allow-origin": "*",
+        'Content-Type': ['application/json', 'multipart/form-data']
+      },
+      withCredentials: true
+    })
       .subscribe({
         next: (response: any) => {
           console.log('Login successful:', response);
 
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.accessToken);
           localStorage.setItem('userId', response.userId);
           localStorage.setItem('email', email);
           this.authService.login(response.roles);

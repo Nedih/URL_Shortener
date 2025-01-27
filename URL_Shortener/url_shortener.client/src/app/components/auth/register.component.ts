@@ -1,48 +1,69 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true, 
   templateUrl: './register.component.html',
-  imports: [ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIf],
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent{
+export class RegisterComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
-  errorMessage: string = '';
+  errorMessage: string | null = null;
   registerForm: FormGroup;
   submitted = false;
-    http: any;
+  isSubmitting = false;
 
-  onClickSubmit(result: { username: string; }) {
-    console.log("You have entered : " + result.username);
-  }
-
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
     this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
+      email: new FormControl('', [Validators.required, Validators.email]),
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+    }, {
+      validators: this.mustMatch('password', 'confirmPassword')
     });
   }
+
   get f() {
     return this.registerForm.controls;
   }
 
+  mustMatch(controlName: string, matchingControlName: string): ValidatorFn {
+    return (group: AbstractControl): { [key: string]: boolean } | null => {
+      const control = group.get(controlName);
+      const matchingControl = group.get(matchingControlName);
+      if (matchingControl?.errors && !matchingControl?.errors['mustMatch']) {
+        return null;
+      }
+      if (control?.value !== matchingControl?.value) {
+        matchingControl?.setErrors({ mustMatch: true });
+      } else {
+        matchingControl?.setErrors(null);
+      }
+      return null;
+    };
+  }
+
   onSubmit(): void {
     this.submitted = true;
+    this.errorMessage = null;
 
     if (this.registerForm.invalid) {
       console.log('Form is invalid');
+
       return;
     }
+
+    this.isSubmitting = true;
 
     const formValues = this.registerForm.value;
     console.log('Registration data:', formValues);
@@ -53,17 +74,12 @@ export class RegisterComponent{
       },
       error: (err: { message: string; }) => {
         this.errorMessage = 'Registration failed: ' + err.message;
+        this.registerForm.reset(); 
+        this.submitted = false;
+        this.isSubmitting = false;
       }
     });
     alert('Registration successful!');
-    this.router.navigate(['/login']); // Redirect to login after successful registration
-
-
+    this.router.navigate(['/login']); 
   }
-}
-
-
-
-function register(email: string, password: string) {
-    throw new Error('Function not implemented.');
 }

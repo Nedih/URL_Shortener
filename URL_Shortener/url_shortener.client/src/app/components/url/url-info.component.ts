@@ -1,32 +1,86 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { NgFor, NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+import { MatListModule } from '@angular/material/list';
+import { UrlService } from '../../services/url.service';
+import { LoadingService } from '../../services/loading-service';
+//import { MatTableModule } from '@angular/material/table';
+
+interface Url {
+  urlText: string;
+  shortenUrl: string;
+  urlCreationDate: string;
+  urlDescription: string;
+  userId: string;
+  userEmail: string;
+}
 
 @Component({
   selector: 'app-url-details',
-  templateUrl: './url-details.component.html',
-  styleUrls: ['./url-details.component.css']
+  templateUrl: './url-info.component.html',
+  standalone: true,
+  styleUrls: ['./url-info.component.scss'],
+  imports: [MatListModule]
 })
 export class UrlDetailsComponent implements OnInit {
-  public selectedUrl: any; // You can replace `any` with your specific type
+  public selectedUrl: Url | undefined; 
 
-  constructor(private route: ActivatedRoute) {
-    //const selectedUrl = this.route.snapshot.paramMap.get('url');
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private authService: AuthService,
+    public urlService: UrlService,
+    private router: Router,
+    public loadingService: LoadingService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
-    // Fetch the 'urlText' from the URL parameters and load the URL details
-    const urlText = this.route.snapshot.paramMap.get('urlText');
+    this.loadingService.show();
+    this.changeDetectorRef.detectChanges();
+    
+    const shortenUrl = this.route.snapshot.paramMap.get('shortenUrl') || '';
+    this.fetchUrl(shortenUrl);
 
-    // Fetch the URL details from your API or local data
-    // You can replace this with an actual HTTP request
-    this.selectedUrl = { // Dummy data, replace with actual API data
-      urlText: 'https://example.com',
-      shortenUrl: 'https://short.ly/abc123',
-      urlCreationDate: '2022-01-01',
-      urlDescription: 'This is a shortened URL.',
-      userEmail: 'user@example.com',
-    };
+    console.log(shortenUrl); 
+  }
 
-    console.log(urlText); // For debugging purposes
+  fetchUrl(shortenUrl: string) {
+    this.http.get<Url>(`${environment.apiBaseUrl}/api/url/${shortenUrl}`).subscribe({
+      next: (result) => {
+        console.log('Fetched URL:', result);
+        this.selectedUrl = result;
+      },
+      error: (error) => {
+        console.error('Error fetching URL:', error);
+      },
+      complete: () => {
+        console.log('URL fetch complete');
+      }
+    });
+  }
+
+  fetchUrls(shortenUrl: string) {
+    this.http.get<Url[]>(`${environment.apiBaseUrl}/api/url`).subscribe({
+      next: (result) => {
+        console.log('Fetched URLs:', result);
+        this.selectedUrl = result.find(x => x.shortenUrl = shortenUrl);
+      },
+      error: (error) => {
+        console.error('Error fetching URLs:', error);
+      },
+      complete: () => {
+        console.log('URL fetch complete');
+        this.loadingService.hide();
+        this.changeDetectorRef.detectChanges();
+      }
+    });
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 }

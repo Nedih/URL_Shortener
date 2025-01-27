@@ -5,9 +5,9 @@ namespace URL_Shortener.DAL.Entities
 {
     public class UserAccount : IdentityUser
     {
-        [Required]
-        public string Name { get; set; }
-
-        public List<Url> Urls { get; set; } 
+        public string Name { get; set; } = string.Empty;
+        public List<Url> Urls { get; set; } = new List<Url>();
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

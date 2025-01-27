@@ -1,0 +1,44 @@
+<div class="url-container">
+  <div class="head">
+    <button class="btn-back" (click)="goBack()">
+      <i class="fa fa-arrow-left"></i> Back
+    </button>
+    <h2>Create URL</h2>
+  </div>
+  <div class="url-inner-container">
+    <form [formGroup]="urlForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="urlText">URL</label>
+        <input type="text"
+               id="urlText"
+               class="form-control"
+               formControlName="urlText"
+               placeholder="Enter the URL" />
+        <div *ngIf="urlForm.get('urlText')?.invalid && urlForm.get('urlText')?.touched" class="error">
+          <small *ngIf="urlForm.get('urlText')?.hasError('required')">URL is required.</small>
+          <small *ngIf="urlForm.get('urlText')?.hasError('url')">Invalid URL format.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="urlDescription">Description</label>
+        <textarea id="urlDescription"
+                  class="form-control"
+                  formControlName="urlDescription"
+                  placeholder="Enter a description for the URL"></textarea>
+        <div *ngIf="urlForm.get('urlDescription')?.invalid && urlForm.get('urlDescription')?.touched" class="error">
+          <small *ngIf="urlForm.get('urlDescription')?.hasError('required')">Description is required.</small>
+          <small *ngIf="urlForm.get('urlDescription')?.hasError('minlength')">Description must be at least 10 characters long.</small>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || urlForm.invalid">
+        {{ isSubmitting ? 'Creating...' : 'Create URL' }}
+      </button>
+    </form>
+  </div>
+</div>

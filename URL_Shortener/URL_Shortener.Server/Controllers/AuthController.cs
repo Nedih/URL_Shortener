@@ -7,6 +7,8 @@ using URL_Shortener.BLL.Interfaces;
 using URL_Shortener.BLL.Models.Identity;
 using URL_Shortener.DAL.Entities;
 using System.IdentityModel.Tokens.Jwt;
+using URL_Shortener.BLL.Services;
+using System.Security.Claims;
 
 namespace URL_Shortener.Server.Controllers
 {
@@ -46,19 +48,24 @@ namespace URL_Shortener.Server.Controllers
         public async Task<IActionResult> Authenticate([FromBody] LoginViewModel user)
         {
             var loginResult = await _userAccountService.ValidateUserAsync(user);
+            
+            return !loginResult.Succeeded
+                ? Unauthorized(loginResult.Error)
+                : Ok(new {
+                    loginResult.Tokens?.AccessToken,
+                    loginResult.Tokens?.RefreshToken,
+                    loginResult.Roles
+                });
+        }
 
-            if (!loginResult.Succeeded)
-            {
-                return Unauthorized(loginResult.Errors);
-            }
-
-            var roles = await _userAccountService.GetUserClaimsAsync(user);
-
-            return Ok(new
-            {
-                username = user.Email,
-                roles = roles 
-            });
+        [HttpPost]
+        [Route("refresh-token")]
+        public async Task<IActionResult> RefreshToken(TokenModel tokenModel)
+        {
+            var result = await _userAccountService.RefreshTokensAsync(tokenModel);
+            if (!string.IsNullOrEmpty(result.Exception))
+                return BadRequest(result.Exception);
+            return Ok(result);
         }
     }
 }

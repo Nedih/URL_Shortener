@@ -1,0 +1,21 @@
+@use '../styles/custom-variables';
+
+$table-bg-scale: 0% !default; // Fix for deprecation: https://sass-lang.com/d/function-units
+
+@use 'bootswatch/dist/flatly/variables';
+@use 'bootstrap/scss/bootstrap';
+@use 'bootswatch_fix/flatly'; // import from 'bootswatch/dist/flatly/bootswatch' when font import issue is fixed
+
+@use 'app-theme';
+
+
+.app-component {
+  .nav-link {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  main {
+    padding-top: 80px !important;
+  }
+}

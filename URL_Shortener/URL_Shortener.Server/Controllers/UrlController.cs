@@ -7,18 +7,14 @@ using URL_Shortener.BLL.Models.ViewModels;
 using URL_Shortener.BLL.Interfaces;
 using URL_Shortener.BLL.Models;
 using FluentResults;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace URL_Shortener.Server.Controllers
 {
     [Route("api/url")]
-    public class UrlController : Controller
+    public class UrlController(IUrlService service) : Controller
     {
-        private readonly IUrlService _service;
-
-        public UrlController(IUrlService service)
-        {
-            _service = service;
-        }
+        private readonly IUrlService _service = service;
 
         [AllowAnonymous]
         [HttpGet]
@@ -26,25 +22,34 @@ namespace URL_Shortener.Server.Controllers
         {
             return _service.GetUrls();
         }
-        [Authorize]
-        [HttpPost]
-        public async Task<Result> CreateUrl([FromBody] UrlDTO url)
+        [Authorize(Policy = "UserPolicy")]
+        [HttpPost("create")]
+        //[Authorize]
+        public async Task<IActionResult> CreateUrl([FromBody] UrlDTO url)
         {
-            return await _service.CreateAsync(url);
+            var result = await _service.CreateAsync(url);
+            if (result.IsSuccess)
+            {
+                return Ok(new{ shortenUrl = result.Value });
+            }
+
+            return BadRequest(string.Join(", ", result.Errors.Select(error => error.Message)));
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserPolicy")]
+        //[AllowAnonymous]
         [HttpDelete]
-        public Result DeleteAsync(string url)
+        public Result Delete(string shorten)
         {
-            return _service.Delete(url).IsSuccess ? Result.Ok() : Result.Fail(_service.Delete(url).Errors);
+            var res = _service.Delete(shorten);
+            return res.IsSuccess ? Result.Ok() : Result.Fail(res.Errors);
         }
 
-        /*[Authorize]
-        [HttpGet("{id}")]
-        public async Task<UrlDTO?> GetPost(Guid id)
+        //[Authorize(Roles = "User, Admin")]
+        [HttpGet("{shorten}")]
+        public UrlDTO? GetPost(string shorten)
         {
-            return await _service.GetUrl(id);
-        }    */
+            return _service.GetUrl(shorten);
+        }    
     }
 }

@@ -1,65 +1,52 @@
-<div class="url-table">
-  <h2>Shortened URLs</h2>
+<div *ngIf="!isLoading()" class="url-table container mt-5">
+  <h2 class="text-center mb-4">Shortened URLs</h2>
 
-  <!-- Display "No data" message if the array is empty -->
-  <p *ngIf="urls.length === 0"><em>No URLs found. Please add some.</em></p>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button *ngIf="isLoggedIn()" class="btn btn-success" (click)="addUrl()">
+      <i class="glyphicon glyphicon-plus"></i> New
+    </button>
+  </div>
 
-  <!-- Table for displaying the URLs -->
-  <table *ngIf="urls.length > 0">
-    <thead>
-      <tr>
-        <th>Original URL</th>
-        <th>Shortened URL</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let url of urls">
-        <td>{{ url.urlText }}</td>
-        <td><a>{{ "https://localhost:7214/" + url.shortenUrl }}</a></td>
-        <td>
-          <!-- View Details button -->
-          <button class="btn btn-info" (click)="viewUrlDetails(url)">
-            Details
-          </button>
-          <button *ngIf="isAdmin() || isUserOwner(url.userEmail)" (click)="deleteUrl(url.urlText)">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <p *ngIf="urls.length === 0" class="text-muted">
+    <em>No URLs found. Please add some.</em>
+  </p>
 
-<!-- Modal structure -->
-<div class="modal fade"
-     id="infoModal"
-     tabindex="-1"
-     aria-labelledby="modalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">URL Details</h5>
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Original URL:</strong> {{ selectedUrl?.urlText }}</p>
-        <p><strong>Shortened URL:</strong> {{ selectedUrl?.shortenUrl }}</p>
-        <p><strong>Creation Date:</strong> {{ selectedUrl?.urlCreationDate }}</p>
-        <p><strong>Description:</strong> {{ selectedUrl?.urlDescription }}</p>
-        <p><strong>Created By:</strong> {{ selectedUrl?.userId }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal">
-          Close
-        </button>
-      </div>
-    </div>
+  <div class="table-responsive" *ngIf="urls.length > 0">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Original URL</th>
+          <th>Shortened URL</th>
+          <th *ngIf="isLoggedIn()">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let url of urls">
+          <td (click)="urlService.copyText(url.urlText)" class="url-text">
+            {{ url.urlText }}
+            <i class="fas fa-copy"></i>
+          </td>
+          <td (click)="urlService.copyText(url.urlText)" class="url-text">
+            {{ "https://localhost:7214/" + url.shortenUrl }}
+            <i class="fas fa-copy"></i>
+          </td>
+          <td *ngIf="isLoggedIn()">
+            <div class="actions">
+              <button *ngIf="isLoggedIn()"
+                      class="btn btn-info btn-sm"
+                      (click)="viewUrlDetails(url.shortenUrl)">
+                <i class="glyphicon glyphicon-eye-open"></i> Details
+              </button>
+              <button *ngIf="isAdmin() || isUserOwner(url.userEmail)"
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteUrl(url.shortenUrl)">
+                <i class="glyphicon glyphicon-trash"></i> Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
+
