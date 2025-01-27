@@ -12,14 +12,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace URL_Shortener.Server.Controllers
 {
     [Route("api/url")]
-    public class UrlController : Controller
+    public class UrlController(IUrlService service) : Controller
     {
-        private readonly IUrlService _service;
-
-        public UrlController(IUrlService service)
-        {
-            _service = service;
-        }
+        private readonly IUrlService _service = service;
 
         [AllowAnonymous]
         [HttpGet]
@@ -52,7 +47,7 @@ namespace URL_Shortener.Server.Controllers
 
         //[Authorize(Roles = "User, Admin")]
         [HttpGet("{shorten}")]
-        public UrlDTO GetPost(string shorten)
+        public UrlDTO? GetPost(string shorten)
         {
             return _service.GetUrl(shorten);
         }    
