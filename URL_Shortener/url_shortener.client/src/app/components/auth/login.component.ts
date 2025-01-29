@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { NgIf } from '@angular/common';
+import { MessageService } from 'primeng/api';
+import { showSuccess } from '../../utils/toast.util';
 
 @Component({
   selector: 'app-login',
@@ -20,9 +22,12 @@ export class LoginComponent{
   isSubmitting = false;
   errorMessage: string | null = null;
 
-  constructor(private authService: AuthService, private fb: FormBuilder,
+  constructor(private authService: AuthService,
+    private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private messageService: MessageService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -62,7 +67,7 @@ export class LoginComponent{
           this.isSubmitting = false;
         },
         complete: () => {
-          
+          showSuccess(this.messageService, "You've been successfully logged in!");
           this.isSubmitting = false;
         }
       });

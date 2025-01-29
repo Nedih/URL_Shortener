@@ -7,6 +7,8 @@ import { AuthService } from '../../services/auth.service';
 import $ from 'jquery';
 import { UrlService } from '../../services/url.service';
 import { LoadingService } from '../../services/loading-service';
+import { MessageService } from 'primeng/api';
+import { showError, showSuccess } from '../../utils/toast.util';
 //import { MatCardModule } from '@angular/material/card';
 
 interface Url {
@@ -36,7 +38,8 @@ export class UrlTableComponent implements OnInit {
     private authService: AuthService,
     public urlService: UrlService,
     private router: Router,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -81,8 +84,10 @@ export class UrlTableComponent implements OnInit {
       withCredentials: true }).subscribe({
       next: () => {
         console.log('Delete URL');
+        showSuccess(this.messageService, "URL was deleted!");
       },
       error: (error) => {
+        showError(this.messageService, error);
         console.error('Error deleting URLs:', error);
       },
       complete: () => {

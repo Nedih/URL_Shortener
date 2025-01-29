@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { showSuccess } from '../../utils/toast.util';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -22,12 +24,16 @@ export class RegisterComponent {
   submitted = false;
   isSubmitting = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {
     this.registerForm = this.fb.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+      email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
     }, {
       validators: this.mustMatch('password', 'confirmPassword')
     });
@@ -77,9 +83,12 @@ export class RegisterComponent {
         this.registerForm.reset(); 
         this.submitted = false;
         this.isSubmitting = false;
+      },
+      complete: () => {
+        showSuccess(this.messageService, `You've been sucessfully registered, ${formValues.email}!`);
+        this.isSubmitting = false;
+        this.router.navigate(['/login']);
       }
     });
-    alert('Registration successful!');
-    this.router.navigate(['/login']); 
   }
 }

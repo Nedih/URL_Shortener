@@ -1,15 +1,17 @@
 <div *ngIf="!isLoading()" class="url-table container mt-5">
   <h2 class="text-center mb-4">Shortened URLs</h2>
 
-  <div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="d-flex">
+    <div class="d-flex">
+      <p *ngIf="urls.length === 0" class="text-muted">
+        <em>No URLs found.&nbsp;</em>
+        <em *ngIf="isLoggedIn()">Please add some.</em>
+      </p>
+    </div>
     <button *ngIf="isLoggedIn()" class="btn btn-success" (click)="addUrl()">
       <i class="glyphicon glyphicon-plus"></i> New
     </button>
   </div>
-
-  <p *ngIf="urls.length === 0" class="text-muted">
-    <em>No URLs found. Please add some.</em>
-  </p>
 
   <div class="table-responsive" *ngIf="urls.length > 0">
     <table class="table table-bordered table-striped table-hover">

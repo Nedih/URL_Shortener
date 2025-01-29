@@ -7,6 +7,8 @@ import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../../services/loading-service';
+import { MessageService } from 'primeng/api';
+import { showSuccess } from '../../utils/toast.util';
 
 interface UrlResponse {
   shortenUrl: string;
@@ -30,7 +32,8 @@ export class UrlCreateComponent {
     //private urlService: UrlService,
     private router: Router,
     private authService: AuthService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    private messageService:MessageService
   )
   {
     this.urlForm = this.fb.group({
@@ -63,7 +66,7 @@ export class UrlCreateComponent {
         withCredentials: true,
       }).subscribe({
         next: (response) => {
-          alert(`Shorten URL is ${response.shortenUrl}`);
+          showSuccess(this.messageService, `The URL has been added! Shorten URL is ${response.shortenUrl}`);
           this.router.navigate(['/']); 
         },
         error: (error) => {

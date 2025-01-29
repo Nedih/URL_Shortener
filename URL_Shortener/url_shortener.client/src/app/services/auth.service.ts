@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { showSuccess } from '../utils/toast.util';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,11 @@ export class AuthService {
   private roles: string[] = []; 
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private messageService: MessageService
+  ) { }
 
   login(roles: string[]): void
   {
@@ -27,10 +32,11 @@ export class AuthService {
   }
 
   logout(): void {
+    showSuccess(this.messageService, "You've been logged out!");
     this.loggedIn.next(false);
     localStorage.removeItem('roles');
     localStorage.removeItem('email');
-    localStorage.removeItem('token');
+    localStorage.removeItem('token');  
     this.router.navigate(['/']);
   }
 

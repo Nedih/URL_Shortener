@@ -23,7 +23,7 @@ interface Url {
   templateUrl: './url-info.component.html',
   standalone: true,
   styleUrls: ['./url-info.component.scss'],
-  imports: [MatListModule]
+  imports: [MatListModule, NgIf]
 })
 export class UrlDetailsComponent implements OnInit {
   public selectedUrl: Url | undefined; 
@@ -59,6 +59,8 @@ export class UrlDetailsComponent implements OnInit {
       },
       complete: () => {
         console.log('URL fetch complete');
+        this.loadingService.hide();
+        this.changeDetectorRef.detectChanges();
       }
     });
   }
@@ -82,5 +84,9 @@ export class UrlDetailsComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  isLoading(): boolean {
+    return this.loadingService.get();
   }
 }

@@ -4,12 +4,14 @@ import { PreloadAllModules, provideRouter, TitleStrategy, UrlSerializer, withPre
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app-routing.module';
+import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptorsFromDi()),
+    MessageService,
     provideAnimations()
   ]
 };
