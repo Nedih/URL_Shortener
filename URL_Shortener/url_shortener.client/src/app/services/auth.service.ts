@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToastService } from './toast.service';
 
 export interface registerModel {
   email: string,
@@ -23,8 +22,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
-    private messageService: ToastService
+    private router: Router
   ) { }
 
   authorize(roles: string[]): void
@@ -54,7 +52,6 @@ export class AuthService {
   }
 
   logOut(): void {
-    this.messageService.showSuccess("You've been logged out!");
     this.loggedIn.next(false);
     localStorage.removeItem('roles');
     localStorage.removeItem('email');

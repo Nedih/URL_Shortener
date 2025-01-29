@@ -1,10 +1,12 @@
-import { ApplicationConfig, ErrorHandler, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { PreloadAllModules, provideRouter, TitleStrategy, UrlSerializer, withPreloading } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app-routing.module';
 import { MessageService } from 'primeng/api';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +14,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptorsFromDi()),
     MessageService,
-    provideAnimations()
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: { preset: Aura },
+    }),
   ]
 };

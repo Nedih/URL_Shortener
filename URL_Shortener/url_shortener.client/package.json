@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
     "@ng-select/ng-select": "^14.2.0",
+    "@primeng/themes": "^19.0.5",
     "@siemens/ngx-datatable": "^22.4.1",
     "bootstrap": "^5.3.3",
     "bootswatch": "^5.3.3",

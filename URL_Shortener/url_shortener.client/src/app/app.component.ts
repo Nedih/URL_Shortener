@@ -5,7 +5,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingService } from './services/loading.service';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -18,14 +17,13 @@ import { MessageService } from 'primeng/api';
     MatProgressBarModule,
     ToastModule
   ],
-  providers: [MessageService]
 })
 export class AppComponent {
   title = 'URL Shortener';
   
   constructor(
     public loadingService: LoadingService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ){}
 
   isLoading(): boolean{
