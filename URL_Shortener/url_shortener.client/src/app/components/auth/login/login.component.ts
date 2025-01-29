@@ -1,12 +1,9 @@
 import { Component} from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { NgIf } from '@angular/common';
-import { MessageService } from 'primeng/api';
-import { showSuccess } from '../../utils/toast.util';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +19,11 @@ export class LoginComponent{
   isSubmitting = false;
   errorMessage: string | null = null;
 
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AuthService,
     private fb: FormBuilder,
-    private http: HttpClient,
     private router: Router,
-    private messageService: MessageService
+    private messageService: ToastService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,13 +40,7 @@ export class LoginComponent{
     this.isSubmitting = true;
     const { email, password } = this.loginForm.value;
 
-    this.http.post(`${environment.apiBaseUrl}/api/auth/login`, { email, password }, {
-      headers: {
-        "access-control-allow-origin": "*",
-        'Content-Type': ['application/json', 'multipart/form-data']
-      },
-      withCredentials: true
-    })
+    this.authService.logIn(email, password)
       .subscribe({
         next: (response: any) => {
           console.log('Login successful:', response);
@@ -57,9 +48,9 @@ export class LoginComponent{
           localStorage.setItem('token', response.accessToken);
           localStorage.setItem('userId', response.userId);
           localStorage.setItem('email', email);
-          this.authService.login(response.roles);
+          this.authService.authorize(response.roles);
 
-          this.router.navigate(['/']);
+          
         },
         error: (error) => {
           console.error('Login failed:', error);
@@ -67,8 +58,9 @@ export class LoginComponent{
           this.isSubmitting = false;
         },
         complete: () => {
-          showSuccess(this.messageService, "You've been successfully logged in!");
+          this.messageService.showSuccess("You've been successfully logged in!");
           this.isSubmitting = false;
+          this.router.navigate(['/']);
         }
       });
   }

@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { showSuccess } from '../../utils/toast.util';
-import { MessageService } from 'primeng/api';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -26,8 +23,8 @@ export class RegisterComponent {
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient,
-    private messageService: MessageService
+    private authService: AuthService,
+    private messageService: ToastService
   ) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -74,9 +71,8 @@ export class RegisterComponent {
     const formValues = this.registerForm.value;
     console.log('Registration data:', formValues);
 
-    this.http.post(`${environment.apiBaseUrl}/api/auth/register`, { formValues }).subscribe({
+    this.authService.register(formValues).subscribe({
       next: () => {
-        alert('Registration successful');
       },
       error: (err: { message: string; }) => {
         this.errorMessage = 'Registration failed: ' + err.message;
@@ -85,7 +81,7 @@ export class RegisterComponent {
         this.isSubmitting = false;
       },
       complete: () => {
-        showSuccess(this.messageService, `You've been sucessfully registered, ${formValues.email}!`);
+        this.messageService.showSuccess(`You've been sucessfully registered, ${formValues.email}!`);
         this.isSubmitting = false;
         this.router.navigate(['/login']);
       }

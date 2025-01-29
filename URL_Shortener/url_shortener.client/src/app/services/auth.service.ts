@@ -4,8 +4,14 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { showSuccess } from '../utils/toast.util';
-import { MessageService } from 'primeng/api';
+import { ToastService } from './toast.service';
+
+export interface registerModel {
+  email: string,
+  name: string,
+  password: string,
+  confirmPassword: string
+}
 
 @Injectable({
   providedIn: 'root'
@@ -18,21 +24,37 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private messageService: MessageService
+    private messageService: ToastService
   ) { }
 
-  login(roles: string[]): void
+  authorize(roles: string[]): void
   {
     localStorage.setItem('roles', JSON.stringify(roles));
     this.loggedIn.next(true);
   }
 
-  register(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, { email, password });
+  logIn(email: string, password: string) {
+    return this.http.post(`${this.apiUrl}/login`, { email, password }, {
+      headers: {
+        "access-control-allow-origin": "*",
+        'Content-Type': ['application/json', 'multipart/form-data']
+      },
+      withCredentials: true
+    })
   }
 
-  logout(): void {
-    showSuccess(this.messageService, "You've been logged out!");
+  register(user: registerModel): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, { user }, {
+      headers: {
+        "access-control-allow-origin": "*",
+        'Content-Type': ['application/json', 'multipart/form-data']
+      },
+      withCredentials: true
+    });
+  }
+
+  logOut(): void {
+    this.messageService.showSuccess("You've been logged out!");
     this.loggedIn.next(false);
     localStorage.removeItem('roles');
     localStorage.removeItem('email');

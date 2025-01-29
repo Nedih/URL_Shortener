@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router, RouterLink, RouterLinkActive} from '@angular/router';
+import { RouterLink, RouterLinkActive} from '@angular/router';
 import { NgIf } from '@angular/common';
-import { MessageService } from 'primeng/api';
-import { showSuccess } from '../../utils/toast.util';
-//import { MatToolbarModule } from '@angular/material/toolbar';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-header',
@@ -14,15 +12,18 @@ import { showSuccess } from '../../utils/toast.util';
 })
 export class HeaderComponent{
   clickedItem: any = null;
-  constructor(private authService: AuthService, private messageService: MessageService) { }
+  constructor(
+    private authService: AuthService,
+    private messageService: ToastService
+  ) { }
 
   isLoggedIn() : boolean {
     return this.authService.isLoggedIn();
   }
 
   onLogout(): void {
-    showSuccess(this.messageService, "You've been logged out!");
-    this.authService.logout();
+    this.messageService.showSuccess("You've been logged out!");
+    this.authService.logOut();
   }
 
   onLogin(): void {
@@ -40,4 +41,3 @@ export class HeaderComponent{
     this.clickedItem = li; 
   }
 }
-

@@ -1,9 +1,9 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { LoadingService } from './services/loading-service';
+import { LoadingService } from './services/loading.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
