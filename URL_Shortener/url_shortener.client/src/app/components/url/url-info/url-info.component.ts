@@ -1,37 +1,22 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { environment } from '../../../environments/environment';
-import { NgFor, NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
-import { UrlService } from '../../services/url.service';
-import { LoadingService } from '../../services/loading-service';
-//import { MatTableModule } from '@angular/material/table';
-
-interface Url {
-  urlText: string;
-  shortenUrl: string;
-  urlCreationDate: string;
-  urlDescription: string;
-  userId: string;
-  userEmail: string;
-}
+import { Url, UrlService } from '../../../services/url.service';
+import { LoadingService } from '../../../services/loading.service';
 
 @Component({
   selector: 'app-url-details',
   templateUrl: './url-info.component.html',
   standalone: true,
   styleUrls: ['./url-info.component.scss'],
-  imports: [MatListModule]
+  imports: [MatListModule, NgIf]
 })
 export class UrlDetailsComponent implements OnInit {
   public selectedUrl: Url | undefined; 
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private authService: AuthService,
     public urlService: UrlService,
     private router: Router,
     public loadingService: LoadingService,
@@ -49,28 +34,13 @@ export class UrlDetailsComponent implements OnInit {
   }
 
   fetchUrl(shortenUrl: string) {
-    this.http.get<Url>(`${environment.apiBaseUrl}/api/url/${shortenUrl}`).subscribe({
+    this.urlService.getUrl(shortenUrl).subscribe({
       next: (result) => {
         console.log('Fetched URL:', result);
         this.selectedUrl = result;
       },
       error: (error) => {
         console.error('Error fetching URL:', error);
-      },
-      complete: () => {
-        console.log('URL fetch complete');
-      }
-    });
-  }
-
-  fetchUrls(shortenUrl: string) {
-    this.http.get<Url[]>(`${environment.apiBaseUrl}/api/url`).subscribe({
-      next: (result) => {
-        console.log('Fetched URLs:', result);
-        this.selectedUrl = result.find(x => x.shortenUrl = shortenUrl);
-      },
-      error: (error) => {
-        console.error('Error fetching URLs:', error);
       },
       complete: () => {
         console.log('URL fetch complete');
@@ -82,5 +52,9 @@ export class UrlDetailsComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  isLoading(): boolean {
+    return this.loadingService.get();
   }
 }

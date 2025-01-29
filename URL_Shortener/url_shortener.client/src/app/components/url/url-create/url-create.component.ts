@@ -1,23 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UrlService } from '../../services/url.service'; 
+import { UrlService } from '../../../services/url.service'; 
 import { NgIf } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
-import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { LoadingService } from '../../services/loading-service';
-
-interface UrlResponse {
-  shortenUrl: string;
-}
+import { AuthService } from '../../../services/auth.service';
+import { LoadingService } from '../../../services/loading.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-url-create',
-  templateUrl: './url-add.component.html',
+  templateUrl: './url-create.component.html',
   standalone: true,
   imports: [NgIf, FormsModule, ReactiveFormsModule],
-  styleUrls: ['./url-add.component.scss']
+  styleUrls: ['./url-create.component.scss']
 })
 export class UrlCreateComponent {
   urlForm: FormGroup;
@@ -26,11 +21,11 @@ export class UrlCreateComponent {
   
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    //private urlService: UrlService,
+    private urlService: UrlService,
     private router: Router,
     private authService: AuthService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    private messageService: ToastService
   )
   {
     this.urlForm = this.fb.group({
@@ -52,18 +47,10 @@ export class UrlCreateComponent {
       const urlData = this.urlForm.value;
       const { urlText, urlDescription } = urlData;
       const userEmail = this.authService.getEmail() || '';
-      const token = localStorage.getItem('token');
 
-      this.http.post<UrlResponse>(`${environment.apiBaseUrl}/api/url/create`, { urlText, urlDescription, userEmail }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'access-control-allow-origin': '*',
-          'Content-Type': ['application/json', 'multipart/form-data'],
-        },
-        withCredentials: true,
-      }).subscribe({
+      this.urlService.createUrl({ urlText, urlDescription, userEmail }).subscribe({
         next: (response) => {
-          alert(`Shorten URL is ${response.shortenUrl}`);
+          this.messageService.showSuccess(`The URL has been added! Shorten URL is ${response.shortenUrl}`);
           this.router.navigate(['/']); 
         },
         error: (error) => {

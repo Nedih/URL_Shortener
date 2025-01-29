@@ -93,6 +93,7 @@ button.btn-danger {
 button.btn-success {
   color: #f8f9fa;
   font-size: 13pt;
+  margin-right: auto;
 }
 
 h2 {
@@ -139,4 +140,19 @@ h2 {
 .no-urls-message em {
   font-weight: bold;
   color: #007bff; 
+}
+
+em {
+    color: #F8F9FA;
+    font-size: 12pt;
+}
+
+.d-flex {
+  align-items: center;
+  justify-content: center;
+}
+
+.text-muted {
+  margin: 0;
+  justify-content: center;
 }

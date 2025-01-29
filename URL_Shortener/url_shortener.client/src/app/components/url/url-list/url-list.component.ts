@@ -1,60 +1,39 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import $ from 'jquery';
-import { UrlService } from '../../services/url.service';
-import { LoadingService } from '../../services/loading-service';
-//import { MatCardModule } from '@angular/material/card';
-
-interface Url {
-  urlText: string;
-  shortenUrl: string;
-  urlCreationDate: string;
-  urlDescription: string;
-  userId: string;
-  userEmail: string;
-}
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { Url, UrlService } from '../../../services/url.service';
+import { LoadingService } from '../../../services/loading.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-url-table',
-  templateUrl: './url.component.html',
+  templateUrl: './url-list.component.html',
   standalone: true,
   imports: [NgFor, NgIf, AsyncPipe],
-  styleUrls: ['./url.component.scss'],
+  styleUrls: ['./url-list.component.scss'],
 })
-export class UrlTableComponent implements OnInit {
+export class UrlListComponent implements OnInit {
   public urls: Url[] = [];
   public selectedUrl: Url | null = null;
-  //private _isLoading!: boolean;
 
   constructor(
     public loadingService: LoadingService,
-    private http: HttpClient,
     private authService: AuthService,
     public urlService: UrlService,
     private router: Router,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private messageService: ToastService
   ) { }
 
   ngOnInit() {
-    //this._isLoading = this.loadingService.get();
     this.loadingService.show();
     this.changeDetectorRef.detectChanges();
     this.fetchUrls();
   }
 
-  fetchUrls(){
-    this.http.get<Url[]>(`${environment.apiBaseUrl}/api/url`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        "access-control-allow-origin": "*",
-        'Content-Type': ['application/json', 'multipart/form-data']
-      },
-      withCredentials: true
-    }).subscribe({
+  fetchUrls() {
+    this.urlService.getUrls().subscribe({
       next: (result) => {
         console.log('Fetched URLs:', result);
         this.urls = result;
@@ -65,28 +44,23 @@ export class UrlTableComponent implements OnInit {
       complete: () => {
         console.log('URL fetch complete');
         this.loadingService.hide();
-        //this._isLoading = false;
         this.changeDetectorRef.detectChanges();
       }
     });
   }
 
   deleteUrl(shorten: string): void {
-    this.http.delete(`${environment.apiBaseUrl}/api/url?shorten=${shorten}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        "access-control-allow-origin": "*",
-        'Content-Type': ['application/json', 'multipart/form-data']
-      },
-      withCredentials: true }).subscribe({
+    this.urlService.deleteUrl(shorten).subscribe({
       next: () => {
         console.log('Delete URL');
+        this.messageService.showSuccess("URL was deleted!");
       },
       error: (error) => {
+        this.messageService.showError(error);
         console.error('Error deleting URLs:', error);
       },
       complete: () => {
-        console.log('URL delete complete');
+        this.messageService.showSuccess('URL delete complete');
         this.fetchUrls();
       }
     });

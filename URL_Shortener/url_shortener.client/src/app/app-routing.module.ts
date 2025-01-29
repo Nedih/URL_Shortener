@@ -1,27 +1,25 @@
 import { Routes } from '@angular/router';
-import { UrlTableComponent } from './components/url/url.component';
 
 export const routes: Routes = [
   //{ path: '', redirectTo: '/urls', pathMatch: 'full' },
   {
     path: '',
-    loadComponent: () => import('./components/url/url.component').then(m => m.UrlTableComponent),
+    loadComponent: () => import('./components/url/url-list/url-list.component').then(m => m.UrlListComponent),
     title: 'Urls'
   },
   {
     path: 'urls',
-    loadComponent: () => import('./components/url/url.component').then(m => m.UrlTableComponent),
+    loadComponent: () => import('./components/url/url-list/url-list.component').then(m => m.UrlListComponent),
     title: 'Urls'
   },
-  //{ path: 'about', component: AboutComponent },/url-details
   {
     path: 'url-add',
-    loadComponent: () => import('./components/url/url-add.component').then(m => m.UrlCreateComponent),
+    loadComponent: () => import('./components/url/url-create/url-create.component').then(m => m.UrlCreateComponent),
     title: 'Url Add'
   },
   {
     path: 'url-details/:shortenUrl',
-    loadComponent: () => import('./components/url/url-info.component').then(m => m.UrlDetailsComponent),
+    loadComponent: () => import('./components/url/url-info/url-info.component').then(m => m.UrlDetailsComponent),
     title: 'Url Details'
   },
   {
@@ -31,12 +29,12 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./components/auth/login.component').then(m => m.LoginComponent),
+    loadComponent: () => import('./components/auth/login/login.component').then(m => m.LoginComponent),
     title: 'Login'
   },
   {
     path: 'register',
-    loadComponent: () => import('./components/auth/register.component').then(m => m.RegisterComponent),
+    loadComponent: () => import('./components/auth/register/register.component').then(m => m.RegisterComponent),
     title: 'Register'
   },
   {

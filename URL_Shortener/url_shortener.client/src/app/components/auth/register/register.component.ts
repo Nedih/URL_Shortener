@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -22,12 +21,16 @@ export class RegisterComponent {
   submitted = false;
   isSubmitting = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private messageService: ToastService
+  ) {
     this.registerForm = this.fb.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+      email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
     }, {
       validators: this.mustMatch('password', 'confirmPassword')
     });
@@ -68,18 +71,20 @@ export class RegisterComponent {
     const formValues = this.registerForm.value;
     console.log('Registration data:', formValues);
 
-    this.http.post(`${environment.apiBaseUrl}/api/auth/register`, { formValues }).subscribe({
+    this.authService.register(formValues).subscribe({
       next: () => {
-        alert('Registration successful');
       },
       error: (err: { message: string; }) => {
         this.errorMessage = 'Registration failed: ' + err.message;
         this.registerForm.reset(); 
         this.submitted = false;
         this.isSubmitting = false;
+      },
+      complete: () => {
+        this.messageService.showSuccess(`You've been sucessfully registered, ${formValues.email}!`);
+        this.isSubmitting = false;
+        this.router.navigate(['/login']);
       }
     });
-    alert('Registration successful!');
-    this.router.navigate(['/login']); 
   }
 }
